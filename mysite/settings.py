@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'healthyfriends',
-    'bootstrap4',
 
     'allauth',
     'allauth.account',
