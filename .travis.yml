@@ -1,17 +1,14 @@
 language: python
-# python version
 python:
-  - '3.8'
-# install dependencies
+- '3.8'
 install:
-  - pip install -r requirements.txt
-# choose testing script
+- pip install -r requirements.txt
 script:
-  - python manage.py test
+- python manage.py test
 deploy:
   provider: heroku
   api_key:
-    secure: "dFzQAQyfR4HmvsVynW7os1vnyKFYRkcScxDflucWVJVI3CqPuaxwlVOxYa2ecnmGY9ITPOqLvqoqvVlYrnCNn+dMea3sWxCndo0H0Po6u4JaxG7Eg5I6SddDPKFTBi1dKhZgmHXHW8OFjFFz7Qwsb8R2Z1/b8DJHgaiLLMtrECkJ9wnmahxPSj+SVe3MNiaRftKenB2CXFEw4LTm/wEfSTpu4O18cZfNk9t9J5LUv66KpjoHmuzlN4HeBhzgBBn2fKluIvGGenK+HQ9VUD2IBAnXvV+b9M8/qSss8Aw+XW5dt21kbKtNddgYdlo8LOM1dpSwbxoglc+0Tt/+sDmRjiei0iMRitfhVrD0PBb7vQBVWToawBy0kjfv50GeclV6RXjMGdKuq8IIx7MMl1di/DmhONWqj0eXfY6y+yz9TVCQLR6b6dgMHmvwrChGplJYGEaWuFGIgN4ZU6F5GWN7ZIwVGgOrU8l9Dvr+lQZ7ae3igNcVZe97HjxYlH41gQXSyHFtaWLgxM8UqM5mUype8l0cUSGI4Ydq98z568F70FHRR2yojN7oEg9/FSzwx+jEflXbivT2FA2Tl/RYh3v3QY6yzGt08L3pDyKvzQECamwyROgtSIH+6W32vvx+Tg85dzoqvZy90vIuDGBWs2ykDrpunJOaGgQLSR60887TBzQ="
+    secure: FSweVR1EDTFgbrdDvwvX7LGZ3SPGW7OWu+GK0L61o/f4fNEZL47sOj/kHTNyhA9NvVdCM6I7axBH1SU0lLQlIgLNXHI/YTvscdflf2g5MQlfdtDm8bAX4Kl8HxN+YKfoL36vEmv+fdmY9KGxs0L289uHNq8J9Y1MsCKlVNA4JG4P4LBwqSKq/aYX1Lvhrv2df0JcUVUwRLdQgCbHrTChyi/Hd5aFy+sPMheYeYJzMNjmqqHBZzmSeDYU2G0dICFmZ6AwBYiT/vbvCGMbFdICMOwRXAwAua580yI9Pwc5Insj6v/7Izea6Opl5kMyBpioljgNWAoGszyxpA3q9GCK+XVclgL7b7Bx4J5wR38Zj0pkrH8bT6zo/0N3JbbY9OhlUzkAn0Tkgq/pVKAxIniFcoDlr0xQk/J8JLU1ekLYYf3xNX6i4d021/+B1LkptmrvfQCv9Ml669s7PU3j6ycjxK+hjeXW5HR3GXpCR6kftCrap5F5NOSCgfaMVMo6j+WYDrTNBgiqdD+JUtIfNtw4O7Y1mnWM/liKwz0Y2ITMu5DsAHd+cD5Z9e59gcizxvoWbQ38DMWRMO5loTtmf+ACyNjixxK4syt8GlVz4Zcrd4I4nj8g2ZAKmGXc20MKqd/qdpjYu5FN3MZqsmItefz81fkaiBlL3hpTj/PuwnFTK18=
   app: healthy-friends
   on:
     repo: uva-cs3240-s21/project-b-10
