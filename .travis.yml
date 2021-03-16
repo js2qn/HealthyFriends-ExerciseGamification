@@ -1,0 +1,15 @@
+language: python
+python:
+  - '3.8'
+#install dependencies
+install:
+  - pip install -r requirements.txt
+script:
+  - python manage.py test
+  deploy:
+    provider: heroku
+    api_key:
+      secure: "dFzQAQyfR4HmvsVynW7os1vnyKFYRkcScxDflucWVJVI3CqPuaxwlVOxYa2ecnmGY9ITPOqLvqoqvVlYrnCNn+dMea3sWxCndo0H0Po6u4JaxG7Eg5I6SddDPKFTBi1dKhZgmHXHW8OFjFFz7Qwsb8R2Z1/b8DJHgaiLLMtrECkJ9wnmahxPSj+SVe3MNiaRftKenB2CXFEw4LTm/wEfSTpu4O18cZfNk9t9J5LUv66KpjoHmuzlN4HeBhzgBBn2fKluIvGGenK+HQ9VUD2IBAnXvV+b9M8/qSss8Aw+XW5dt21kbKtNddgYdlo8LOM1dpSwbxoglc+0Tt/+sDmRjiei0iMRitfhVrD0PBb7vQBVWToawBy0kjfv50GeclV6RXjMGdKuq8IIx7MMl1di/DmhONWqj0eXfY6y+yz9TVCQLR6b6dgMHmvwrChGplJYGEaWuFGIgN4ZU6F5GWN7ZIwVGgOrU8l9Dvr+lQZ7ae3igNcVZe97HjxYlH41gQXSyHFtaWLgxM8UqM5mUype8l0cUSGI4Ydq98z568F70FHRR2yojN7oEg9/FSzwx+jEflXbivT2FA2Tl/RYh3v3QY6yzGt08L3pDyKvzQECamwyROgtSIH+6W32vvx+Tg85dzoqvZy90vIuDGBWs2ykDrpunJOaGgQLSR60887TBzQ="
+    app: healthy-friends
+    on:
+      repo: uva-cs3240-s21/project-b-10
