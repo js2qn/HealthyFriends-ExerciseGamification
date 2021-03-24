@@ -1,0 +1,14 @@
+{% extends 'healthyfriends/base.html' %}
+{% load static %}
+
+{% load socialaccount %}
+{% providers_media_js %}
+
+{% block title %}
+{{ user.username }}'s Profile 
+{% endblock %}
+
+{% block content %}
+<a class="btn btn-outline-secondary mr-1" href="{% url 'fitnesslog' %}">My Fitness Log</a>
+<a class="btn btn-outline-secondary mr-1" href="{% url 'achievements' %}">My Achievements</a>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'healthyfriends/base.html' %}
+{% load static %}
+
+{% load socialaccount %}
+{% providers_media_js %}
+
+{% block title %}
+Hi {{ user.username }}, Welcome to Healthy Friends!
+{% endblock %}
+
+{% block content %}
+this will show if logged in :) 
+</br>
+<img src="{% static 'healthyfriends/images/totoro-clouds.gif' %}" style="padding: 14px 0px">
+{% endblock %}

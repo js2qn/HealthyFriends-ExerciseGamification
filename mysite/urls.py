@@ -17,9 +17,22 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
+from healthyfriends import views 
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name="healthyfriends/index.html")),
+    path('', views.indexView.as_view(), name='index'),
+    path('login/', views.loginView.as_view(), name='login'),
+    path('logout', views.logout, name='logout'),
+    path('home/', login_required(views.homeView.as_view()), name='home'),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
+    path('profile/', login_required(views.profileView.as_view()), name='profile'),
+    path('fitnesslog/', login_required(views.logView.as_view()), name='fitnesslog'),
+    path('achievements/', login_required(views.achievementsView.as_view()), name='achievements'),
+    path('leaderboard/', login_required(views.leaderboardView.as_view()), name='leaderboard'),
+    path('forum/', login_required(views.forumView.as_view()), name='forum'),
+    path('guides/', login_required(views.guidesView.as_view()), name='guides'),
+
+
 ]
