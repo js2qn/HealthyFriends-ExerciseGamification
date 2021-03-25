@@ -32,6 +32,9 @@ def checkLogin(request):
 class logView(TemplateView): 
     template_name = 'healthyfriends/fitnesslog.html'
 
+class logView2(TemplateView): 
+    template_name = 'healthyfriends/fitnesslog2.html'
+
 class achievementsView(TemplateView): 
     template_name = 'healthyfriends/achievements.html'
 
