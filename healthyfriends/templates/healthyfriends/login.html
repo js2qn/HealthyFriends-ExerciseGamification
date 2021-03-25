@@ -1,0 +1,19 @@
+{% extends 'healthyfriends/base.html' %}
+{% load static %}
+
+{% load socialaccount %}
+{% providers_media_js %}
+
+
+{% block title %}
+Login to Healthy Friends 
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<p>Welcome, {{ user.username }} !</p>
+ 
+{% else %}
+<a href="{% provider_login_url 'google' %}">Login with Google</a>
+{% endif %}
+{% endblock %}
