@@ -20,3 +20,4 @@ class Profile(models.Model):
 class Goals(models.Model): 
     name = models.CharField(max_length=200) 
     points = models.IntegerField()
+

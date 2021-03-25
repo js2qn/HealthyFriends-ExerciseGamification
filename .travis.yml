@@ -9,6 +9,6 @@ deploy:
   provider: heroku
   api_key:
     secure: l22SOdnke57EU2TNdm+EbQu0A0sg/OSgy1J0QM27vtzY7RbxqLKGVzfgv+H1RwosoTFo4RrqK3L7OddLNGWcbmRM30E56O3CwY+XRde+xIeqRBZ5rvTjGdyvlSTyPhSSoCE3KETWcSmi0/AezdtHePEe6gK7SCGXKlTkdtRR4V3hkilbWpkOwk5t7qRp3P7vnuiP9bYXy/Ud5mXM4SqxBCulsK4hsDyLbfRTcUroRFfAnq/XFl5WhGgSPKGKvOF74oSMZDfCPsFUsJtcccCd61M+hkD/K+x2eA5kg1i3NkXan+kU96PrgyxBNbjsiyU0CnsIPYOp8xP+Ro97xG3iAf5N8KhxmdpySOvdrXeqN5PU9A2B8bEXkawOrxzQX6jQJluzdbWx1cFrXgNurhiuuDowyiVvHT/gUnzSxdmyXrpfGzn2UpVMmgwXu/UZbqf3SFD244aammvQWlRhuHsZSdmhtZrE13ibOkg1ytt6dbu1j5GdUceW9sZ8H6TUcELVVGrnG8U9MKYZ+PaZcqRJS8hpEOWKDZ4kTwqeyubZvmXHV0p+B3u2TftlkgED+05Q2HxEI3Ao9hoPLuvH2KuIU7xbfG1+cE6V306n/ybbXGbjD+vGiB7MREeXwE2pZmKwX7mP9sp9zVwKucIdzu8/FtQJjKvndwnaGOdL1xe+qok=
-  app: healthy-friends
+  app: healthyfriends
   on:
     repo: uva-cs3240-s21/project-b-10
