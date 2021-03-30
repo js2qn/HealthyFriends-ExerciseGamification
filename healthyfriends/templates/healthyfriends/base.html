@@ -11,6 +11,8 @@
       <script src="{% static 'healthyfriends/js/healthyfriends.js' %}"></script>
       <title>Healthy Friends</title>
     </head>
+    {% block script %}
+    {% endblock %}
     <body onload="setActivePage()">
       <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #cce6ff;">
     {% if user.is_authenticated %}

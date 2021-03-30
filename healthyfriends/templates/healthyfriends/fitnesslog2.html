@@ -8,6 +8,48 @@
 {{ user.username }}'s Fitness Log 2!
 {% endblock %}
 
+{% block script %}
+<script> 
+    function calcCalsBurned() { 
+        var mets = $("#activites option:selected").val();
+        var weight = $("#weight").val();
+        var time = $("#time").val();
+        var calsBurned = mets*3.5*(weight/2.205)/200*time;
+        console.log("calculating...", Math.round(calsBurned));
+        $("#calcCalsBurnedResult").append((Math.round(calsBurned)));
+    }
+</script>
+{% endblock %}
+
 {% block content %}
-sophia working on calories api
+<h3>calories burned during exercise</h3>
+Activity:
+<select name="actvities" id="activites">
+    <option value="8">Jogging</option>
+    <option value="9.8">Running</option>
+    <option value="4.3">Brisk Walk</option>
+    <option value="5.8">Swimming</option>
+    <option value="2.5">Yoga</option>
+    <option value="12.3">Jumprope</option>
+    <option value="6.8">Stationary Cycling</option>
+    <option value="8">Cycling</option>
+    <option value="4.3">Golf</option>
+    <option value="8.0">Tennis (singles)</option>
+    <option value="6.5">Basketball</option>
+    <option value="7.3">Hiking</option>
+</select>
+<br>
+<label for="weight">Weight (lbs)</label>
+<input type="text" name="weight" id="weight" style="margin-top: 4px;"><br>
+<label for="time">Time (min)</label>
+<input type="text" name="time" id="time"><br>
+<div style="padding: 4px">  
+    <a class="btn btn-outline-secondary mr-1" onclick="calcCalsBurned()" style>Calculate</a>
+</div>
+<div id="calcCalsBurnedResult">
+Calories burned:
+</div>
+
+<br>
+
 {% endblock %}
