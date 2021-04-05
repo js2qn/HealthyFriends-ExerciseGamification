@@ -14,9 +14,9 @@
         var mets = $("#activites option:selected").val();
         var weight = $("#weight").val();
         var time = $("#time").val();
-        var calsBurned = mets*3.5*(weight/2.205)/200*time;
+        var calsBurned = Math.round(mets*3.5*(weight/2.205)/200*time);
         console.log("calculating...", Math.round(calsBurned));
-        $("#calcCalsBurnedResult").append((Math.round(calsBurned)));
+        $("#calcCalsBurnedResult").html("Calories burned: " + calsBurned);
     }
 </script>
 {% endblock %}
@@ -47,9 +47,6 @@ Activity:
     <a class="btn btn-outline-secondary mr-1" onclick="calcCalsBurned()" style>Calculate</a>
 </div>
 <div id="calcCalsBurnedResult">
-Calories burned:
 </div>
-
 <br>
-
 {% endblock %}

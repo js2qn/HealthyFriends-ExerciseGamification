@@ -9,6 +9,48 @@ Welcome to Healthy Friends!
 {% endblock %}
 
 {% block content %}
-
+<!-- <h3>Our Features:</h3> -->
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="media mt-2 mb-2">
+                <img class="align-self-center mt-4 mr-3 px-4" style="max-width:40%; max-height: 30%;" src="{% static 'healthyfriends/images/log-icon.png' %}" alt="Generic placeholder image">
+                <div class="media-body">
+                    <h5 class="mt-4">Log your Workouts</h5>
+                    <p>Input your workout information and track your progress!</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="media mt-2 mb-2">
+                <img class="align-self-center mt-4 mr-3 px-4" style="max-width:40%; max-height: 30%;" src="{% static 'healthyfriends/images/achievement-icon.png' %}" alt="Generic placeholder image">
+                <div class="media-body">
+                    <h5 class="mt-4">Earn Achievements</h5>
+                    <p>Gain points for your workouts and see your standing among other users.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="media mt-2 mb-2">
+                <img class="align-self-center mt-4 mr-3 px-4" style="max-width:40%; max-height: 30%;" src="{% static 'healthyfriends/images/forum-icon.png' %}" alt="Generic placeholder image">
+                <div class="media-body">
+                    <h5 class="mt-4">Post in the Forum</h5>
+                    <p>Post questions, advice, or other messages and reply to others in the Healthy Friends forum!</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="media mt-2 mb-2">
+                <img class="align-self-center mt-4 mr-3 px-4" style="max-width:40%; max-height: 30%;" src="{% static 'healthyfriends/images/guide-icon.png' %}" alt="Generic placeholder image">
+                <div class="media-body">
+                    <h5 class="mt-4">Access Guides</h5>
+                    <p>Check out playlists with workout guides to fit your needs!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
