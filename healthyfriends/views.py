@@ -32,6 +32,18 @@ def checkLogin(request):
 class logView(TemplateView): 
     template_name = 'healthyfriends/fitnesslog.html'
 
+def fitLog(request):
+    if request.method == 'POST':
+        if request.POST.get('date') and request.POST.get('length') and request.POST.get('wtype'):
+            workout = Workouts()
+            workout.date = request.POST.get('date')
+            workout.length = request.POST.get('length')
+            workout.workoutType = request.POST.get('activities')
+            if request.POST.get('calories'):
+                workout.calories = request.POST.get('calories')
+            workout.save()
+    return render(request, 'fitnesslog/', None)
+
 class logView2(TemplateView): 
     template_name = 'healthyfriends/fitnesslog2.html'
 
