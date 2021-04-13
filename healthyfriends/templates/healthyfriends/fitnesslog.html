@@ -5,9 +5,58 @@
 {% providers_media_js %}
 
 {% block title %}
-{{ user.username }}'s Fitness Log 
+{{ user.username }}'s Fitness Log
 {% endblock %}
 
-{% block content %}
-this will contain user fitness log 
+{% block script %}
+<script>
+    function calcCalsBurned() {
+        var mets = $("#activites option:selected").val();
+        var weight = $("#weight").val();
+        var time = $("#time").val();
+        var calsBurned = Math.round(mets * 3.5 * (weight / 2.205) / 200 * time);
+        console.log("calculating...", Math.round(calsBurned));
+        $("#calcCalsBurnedResult").html("Calories burned: " + calsBurned);
+    }
+</script>
 {% endblock %}
+
+<body>
+{% block content %}
+<div class="container">
+	<form method = "POST">
+		{% csrf_token %}
+        <div style="padding: 10px; display: inline-block;">
+			<label for="date">Date:</label>
+			<input type="date" id="workoutDate" class="form-control" name="date" style="max-width: 200px;">
+		</div>
+        <div style="padding: 10px; display: inline-block;">
+			<label for="length">Workout Length (minutes)</label>
+			<input type="number" id="lengthOfWorkout"  class="form-control" name="length" min="1" max="9999" style="max-width: 200px;">
+        </div>
+        <div style="padding: 10px; display: inline-block;">
+			<label for="activity">Activity:</label>
+            <select name="activity" id="activity"  class="form-control"  style="max-width: 200px;">
+                <option value="8">Jogging</option>
+                <option value="9.8">Running</option>
+                <option value="4.3">Brisk Walk</option>
+                <option value="5.8">Swimming</option>
+                <option value="2.5">Yoga</option>
+                <option value="12.3">Jumprope</option>
+                <option value="6.8">Stationary Cycling</option>
+                <option value="8">Cycling</option>
+                <option value="4.3">Golf</option>
+                <option value="8.0">Tennis (singles)</option>
+                <option value="6.5">Basketball</option>
+                <option value="7.3">Hiking</option>
+            </select>            
+        </div>
+        <div style="padding: 10px; display: inline-block;">
+			<label for="calories">(optional) calories burned</label>
+			<input type="number" id="calBurned"  class="form-control" name="calories" style="max-width: 200px;">
+		</div>
+		<button type="submit" class="btn btn-success" style="margin-bottom: 6px; margin-left: 10px">Submit</button>
+	<form>
+</div>
+{% endblock %}
+</body>

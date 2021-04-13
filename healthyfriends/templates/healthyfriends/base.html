@@ -1,5 +1,5 @@
 {% load account %}
-{% load static %} 
+{% load static %}
 <html>
     <head>
       <meta charset="utf-8">
@@ -24,20 +24,22 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-              <div class="navbar-nav">
-                {% if user.is_authenticated %}
+              {% if user.is_authenticated %}
+              <ul class="navbar-nav">
                 <a id="profile_nav" class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                 <a id="log_nav" class="nav-item nav-link" href="{% url 'fitnesslog' %}">Fitness Log</a>
                 <a id="achievements_nav" class="nav-item nav-link" href="{% url 'achievements' %}">Achievements</a>
                 <a id="leaderboard_nav" class="nav-item nav-link" href="{% url 'leaderboard' %}">Leaderboard</a>
                 <a id="forum_nav" class="nav-item nav-link" href="{% url 'forum' %}">Forum</a>
                 <a id="guides_nav" class="nav-item nav-link" href="{% url 'guides' %}">Guides</a>
+              </ul>
+              <ul class="nav navbar-nav flex-row justify-content-between ml-auto">
                 <a class="nav-item nav-link" href="/logout">Logout</a>                
-                {% else %}
+              {% else %}
+              <ul class="nav navbar-nav flex-row justify-content-between ml-auto">
                 <a id="login_nav" class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-                {% endif %}
-                
-              </div>
+              {% endif %}
+              </ul>
           </div>
       </nav>
       <div class="container" style="padding-top: 20px">
@@ -51,7 +53,7 @@
         </div>
       </div>
       <footer class="footer mt-auto py-3 bg-light text-center fixed-bottom">
-        <div class="row" style="width: 60%; margin: auto">
+        <!-- <div class="row" style="width: 60%; margin: auto">
           <div class="col-md">
             <a style="color: black">blank</a>
           </div>          
@@ -61,7 +63,7 @@
           <div class="col-md">
             <a style="color: black">blank</a>
           </div>  
-        </div>
+        </div> -->
         <div class="row"> 
           <div class="col-md-auto" style="margin: auto; padding-top: 8px">
             ©2021 B-10

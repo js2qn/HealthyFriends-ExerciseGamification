@@ -8,8 +8,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse
 from django import forms
+
 from .models import *
 from .forms import *
+
 # Create your views here.
 
 
@@ -34,6 +36,20 @@ def checkLogin(request):
 
 class logView(TemplateView): 
     template_name = 'healthyfriends/fitnesslog.html'
+
+def fitLog(request):
+    if request.method == 'POST':
+        if request.POST.get('date') and request.POST.get('length') and request.POST.get('activity'):
+            workout = Workouts()
+            workout.user = request.user
+            workout.date = request.POST.get('date')
+            workout.length = request.POST.get('length')
+            workout.workoutType = request.POST.get('activity')
+            workout.calories = request.POST.get('calories')
+            workout.save()
+        return render(request, 'healthyfriends/fitnesslog.html', None)
+    else:
+        return render(request, 'healthyfriends/fitnesslog.html', None)
 
 class logView2(TemplateView): 
     template_name = 'healthyfriends/fitnesslog2.html'

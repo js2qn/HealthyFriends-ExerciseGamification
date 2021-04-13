@@ -20,6 +20,7 @@ from django.views.generic import TemplateView
 from healthyfriends import views 
 from django.contrib.auth.decorators import login_required
 
+app_name = 'healthyfriends'
 urlpatterns = [
     path('', views.indexView.as_view(), name='index'),
     path('login/', views.loginView.as_view(), name='login'),
@@ -28,7 +29,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('profile/', login_required(views.profileView.as_view()), name='profile'),
-    path('fitnesslog/', login_required(views.logView.as_view()), name='fitnesslog'),
+    path('fitnesslog/', login_required(views.fitLog), name='fitnesslog'),
     path('fitnesslog2/', login_required(views.logView2.as_view()), name='fitnesslog2'),
     path('achievements/', login_required(views.achievementsView.as_view()), name='achievements'),
     path('leaderboard/', login_required(views.leaderboardView.as_view()), name='leaderboard'),

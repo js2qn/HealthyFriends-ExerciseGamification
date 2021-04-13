@@ -3,12 +3,11 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Workouts(models.Model): 
-    user_id = models.IntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateTimeField()
     length = models.DecimalField(max_digits=4, decimal_places=1)
-    type = models.CharField(max_length=200)
+    workoutType = models.CharField(max_length=200)
     calories = models.IntegerField()
-    goal_id = models.IntegerField()
 
 class Profile(models.Model): 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
