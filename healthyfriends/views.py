@@ -86,7 +86,7 @@ def forum(request):
         'discussions':discussions
     }
     print(discussions)
-    return render(request, 'healthyFriends/forum.html', context)
+    return render(request, 'healthyfriends/forum.html', context)
 
 def addInForum(request):
     form = CreateInForum()
@@ -96,7 +96,7 @@ def addInForum(request):
             form.save()
             return redirect('forum')
     context = {'form':form}
-    return render(request, 'healthyFriends/addInForum.html', context)
+    return render(request, 'healthyfriends/addInForum.html', context)
 
 def addInDiscussion(request):
     form = CreateInDiscussion()
@@ -106,7 +106,7 @@ def addInDiscussion(request):
             form.save()
             return redirect('forum')
     context={'form':form}
-    return render(request, 'healthyFriends/addInDiscussion.html', context)
+    return render(request, 'healthyfriends/addInDiscussion.html', context)
 # end not our IP
 class guidesView(ListView): 
     template_name = 'healthyfriends/guides.html'
