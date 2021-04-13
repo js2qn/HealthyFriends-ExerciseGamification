@@ -26,14 +26,15 @@ Healthy Friends Forum
             <div class="card box container">
                 <br>
                 <h5 class="card-title">
-                    <a href='{{forum.link}}'><h3>{{forum.topic}}</h3></a> 
+                    <!-- <a href='{{forum.link}}'><h3>{{forum.topic}}</h3></a> -->
+                    <h3>{{forum.topic}}</h3>
                     <div class="card-body container">
                             <p>{{forum.description}}</p>
                         </h5>
                         <hr>
-                        <p> By: {{forum.name}}</p>
+                        <p> Posted By: {{forum.name}}</p>
                         <hr>     
-                        <h4>Views from other users</h4>
+                        <h4>Comments</h4>
                         {%for discuss in discussions%}
                         {%for objs in discuss%}  
                         {% if objs.forum == forum %}
