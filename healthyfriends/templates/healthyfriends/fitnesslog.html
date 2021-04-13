@@ -1,5 +1,16 @@
 {% extends 'healthyfriends/base.html' %}
 {% load static %}
+<html>
+    <head> 
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> 
+      <script src="{% static 'healthyfriends/js/healthyfriends.js' %}"></script>
+    </head>
+</html>
 
 {% load socialaccount %}
 {% providers_media_js %}
@@ -7,7 +18,40 @@
 {% block title %}
 {{ user.username }}'s Fitness Log 
 {% endblock %}
-
+<body>
 {% block content %}
-this will contain user fitness log 
+<div class="container">
+	<form method = "POST">
+		{% csrf_token %}
+		<div>
+			<label for="date">Date:</label>
+			<input type="date" class="form-control" id="workoutDate" name="date" style="max-width: 180px;">
+		</div>
+		<div>
+			<label for="length">How long was the workout in minutes?</label>
+			<input type="number" id="lengthOfWorkout" name="length" min="1" max="9999">
+		</div>
+        Activity:
+        <select name="actvities" id="activites">
+            <option value="8">Jogging</option>
+            <option value="9.8">Running</option>
+            <option value="4.3">Brisk Walk</option>
+            <option value="5.8">Swimming</option>
+            <option value="2.5">Yoga</option>
+            <option value="12.3">Jumprope</option>
+            <option value="6.8">Stationary Cycling</option>
+            <option value="8">Cycling</option>
+            <option value="4.3">Golf</option>
+            <option value="8.0">Tennis (singles)</option>
+            <option value="6.5">Basketball</option>
+            <option value="7.3">Hiking</option>
+        </select>
+        <div>
+			<label for="calories">(optional) calories burned</label>
+			<input type="number" id="calBurned" name="calories">
+		</div>
+		<button type="submit" class="btn btn-success">Submit</button>
+	<form>
+</div>
 {% endblock %}
+</body>
