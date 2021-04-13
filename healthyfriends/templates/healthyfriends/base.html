@@ -1,5 +1,7 @@
 {% load account %}
 {% load static %} 
+{% load socialaccount %}
+{% providers_media_js %}
 <html>
     <head>
       <meta charset="utf-8">
@@ -37,7 +39,7 @@
                 <a class="nav-item nav-link" href="/logout">Logout</a>                
               {% else %}
               <ul class="nav navbar-nav flex-row justify-content-between ml-auto">
-                <a id="login_nav" class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                <a id="login_nav" class="nav-item nav-link" href="{% provider_login_url 'google' %}">Login</a>
               {% endif %}
               </ul>
           </div>
