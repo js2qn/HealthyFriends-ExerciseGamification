@@ -32,6 +32,10 @@ urlpatterns = [
     path('fitnesslog2/', login_required(views.logView2.as_view()), name='fitnesslog2'),
     path('achievements/', login_required(views.achievementsView.as_view()), name='achievements'),
     path('leaderboard/', login_required(views.leaderboardView.as_view()), name='leaderboard'),
-    path('forum/', login_required(views.forumView.as_view()), name='forum'),
+    # path('forum/', login_required(views.forumView.as_view()), name='forum'),
+    # forum, addInForum, and addInDiscussion URLS taken from the following tutorial: https://data-flair.training/blogs/discussion-forum-python-django/ 
+    path('forum/', login_required(views.forum), name='forum'),
     path('guides/', login_required(views.guidesView.as_view()), name='guides'),
+    path('addInForum/', views.addInForum, name="addInForum"),
+    path('addInDiscussion/', views.addInDiscussion, name='addInDiscussion'),
 ]
