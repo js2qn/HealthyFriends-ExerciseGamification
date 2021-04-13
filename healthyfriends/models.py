@@ -21,3 +21,14 @@ class Goals(models.Model):
     name = models.CharField(max_length=200) 
     points = models.IntegerField()
 
+class Videos(models.Model):
+    # this isn't really all that special, just allows us to easily add videos from admin page instead of having to update the HTML and repush
+    # this is the embed stuff you get from the YouTube share option 
+    embed = models.CharField(max_length=300)
+    # this holds a short description about the content of each video
+    description = models.CharField(max_length=200)
+
+class ForumPost(models.Model):
+    """
+    The forumPost object will be associated with a particular user, have a 
+    """

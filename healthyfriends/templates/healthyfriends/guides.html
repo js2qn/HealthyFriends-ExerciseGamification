@@ -9,5 +9,13 @@ Fitness Guides
 {% endblock %}
 
 {% block content %}
-this will contain fitness guides 
+<p>Welcome to the guides page! Here you will find a curated list of videos to help you get started!</p>
+    {% if videos_list %} 
+        {% for video in videos_list %} 
+            <p>{{ video.description }}</p>
+            <iframe width="560" height="315" src="{{ video.embed }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        {% endfor %}
+    {% else %} 
+        <p>There are no videos available currently. Blame Jacob.</p>
+    {% endif %}
 {% endblock %}

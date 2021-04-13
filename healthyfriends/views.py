@@ -3,9 +3,11 @@ from django.shortcuts import get_object_or_404, render
 from django.contrib.auth import logout as auth_logout
 from django.shortcuts import redirect
 from django.views.generic import TemplateView
+from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django import forms
+from .models import Videos
 
 # Create your views here.
 
@@ -47,5 +49,10 @@ class leaderboardView(TemplateView):
 class forumView(TemplateView): 
     template_name = 'healthyfriends/forum.html'
 
-class guidesView(TemplateView): 
+class guidesView(ListView): 
     template_name = 'healthyfriends/guides.html'
+    context_object_name = 'videos_list'
+
+    def get_queryset(self):
+        return Videos.objects.all()
+    

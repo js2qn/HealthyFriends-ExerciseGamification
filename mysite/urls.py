@@ -34,6 +34,4 @@ urlpatterns = [
     path('leaderboard/', login_required(views.leaderboardView.as_view()), name='leaderboard'),
     path('forum/', login_required(views.forumView.as_view()), name='forum'),
     path('guides/', login_required(views.guidesView.as_view()), name='guides'),
-
-
 ]
