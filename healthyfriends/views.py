@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django import forms
 
+from .models import Workouts, User
+
 # Create your views here.
 
 
@@ -34,15 +36,17 @@ class logView(TemplateView):
 
 def fitLog(request):
     if request.method == 'POST':
-        if request.POST.get('date') and request.POST.get('length') and request.POST.get('wtype'):
+        if request.POST.get('date') and request.POST.get('length') and request.POST.get('activity'):
             workout = Workouts()
+            workout.user = request.user
             workout.date = request.POST.get('date')
             workout.length = request.POST.get('length')
-            workout.workoutType = request.POST.get('activities')
-            if request.POST.get('calories'):
-                workout.calories = request.POST.get('calories')
+            workout.workoutType = request.POST.get('activity')
+            workout.calories = request.POST.get('calories')
             workout.save()
-    return render(request, 'fitnesslog/', None)
+        return render(request, 'healthyfriends/fitnesslog.html', None)
+    else:
+        return render(request, 'healthyfriends/fitnesslog.html', None)
 
 class logView2(TemplateView): 
     template_name = 'healthyfriends/fitnesslog2.html'
