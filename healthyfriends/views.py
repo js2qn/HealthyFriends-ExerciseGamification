@@ -119,4 +119,19 @@ class guidesView(ListView):
 
     def get_queryset(self):
         return Videos.objects.all()
-    
+
+
+
+
+"""
+    <div class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width:{{ goal.current_progress }}|intdiv:{{ goal.desired_progress }}%" aria-valuenow="{{ goal.current_progress }}|intdiv:{{ goal.desired_progress }}" aria-valuemin="0" aria-valuemax="100">
+        </div>
+      </div>
+
+
+    <div class="tab-pane" id="history" role="tabpanel" aria-labelledby="history-tab">  
+    <p class="card-text">First settled around 1000 BCE and then founded as the Etruscan Felsina about 500 BCE, it was occupied by the Boii in the 4th century BCE and became a Roman colony and municipium with the name of Bononia in 196 BCE. </p>
+    <a href="#" class="card-link text-danger">Read more</a>
+    </div>
+"""  
