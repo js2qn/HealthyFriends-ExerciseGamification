@@ -6,6 +6,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django import forms
+from django.urls import reverse
 
 from .models import Workouts, User
 
