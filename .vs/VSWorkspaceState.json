@@ -1,6 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\healthyfriends",
+    "\\healthyfriends\\templates",
+    "\\healthyfriends\\templates\\healthyfriends"
   ],
+  "SelectedNode": "\\healthyfriends\\models.py",
   "PreviewInSolutionExplorer": false
 }
