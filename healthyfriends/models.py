@@ -43,6 +43,9 @@ class Goals(models.Model):
 
     last_update = models.DateField(default=date.today)
 
+    def __str__(self):
+        return self.description
+
 #class Metric(models.Model):
     #goal = models.ForeginKey(Goals, on_delete=models.CASCADE)
     #value = models.DecimalField(max_digits=7, decimal_places=2, default=0.00)
