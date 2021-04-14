@@ -55,7 +55,7 @@ def fitLog(request):
 class logView2(TemplateView): 
     template_name = 'healthyfriends/fitnesslog2.html'
 
-class achievementsView(TemplateView): 
+class achievementsView(ListView): 
     template_name = 'healthyfriends/achievements.html'
     context_object_name = 'goals_list'
 
