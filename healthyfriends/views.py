@@ -57,6 +57,10 @@ class logView2(TemplateView):
 
 class achievementsView(TemplateView): 
     template_name = 'healthyfriends/achievements.html'
+    context_object_name = 'goals_list'
+
+    def get_queryset(self):
+        return Goals.objects.all()
 
 class profileView(TemplateView): 
     template_name = 'healthyfriends/profile.html'

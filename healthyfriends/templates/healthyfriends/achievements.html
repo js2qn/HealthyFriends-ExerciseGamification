@@ -9,5 +9,11 @@
 {% endblock %}
 
 {% block content %}
-this will contain user achievements 
+  {% if goals_list %}
+    {% for goal in goals_list %}
+      <h3>{{ goal.description }}</h3>
+    {% endfor %}
+  {% else %}
+      <p>You have no saved goals.</p>
+  {% endif %}
 {% endblock %}
