@@ -1,5 +1,7 @@
 {% load account %}
-{% load static %}
+{% load static %} 
+{% load socialaccount %}
+{% providers_media_js %}
 <html>
     <head>
       <meta charset="utf-8">
@@ -26,7 +28,6 @@
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
               {% if user.is_authenticated %}
               <ul class="navbar-nav">
-                <a id="profile_nav" class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                 <a id="log_nav" class="nav-item nav-link" href="{% url 'fitnesslog' %}">Fitness Log</a>
                 <a id="achievements_nav" class="nav-item nav-link" href="{% url 'achievements' %}">Achievements</a>
                 <a id="leaderboard_nav" class="nav-item nav-link" href="{% url 'leaderboard' %}">Leaderboard</a>
@@ -37,7 +38,7 @@
                 <a class="nav-item nav-link" href="/logout">Logout</a>                
               {% else %}
               <ul class="nav navbar-nav flex-row justify-content-between ml-auto">
-                <a id="login_nav" class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                <a id="login_nav" class="nav-item nav-link" href="{% provider_login_url 'google' %}">Login</a>
               {% endif %}
               </ul>
           </div>

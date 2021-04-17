@@ -19,8 +19,8 @@ def logout(request):
     auth_logout(request)
     return redirect('index')
 
-class loginView(TemplateView): 
-    template_name = 'healthyfriends/login.html'
+# class loginView(TemplateView): 
+#     template_name = 'healthyfriends/login.html'
 
 class indexView(TemplateView): 
     template_name = 'healthyfriends/index.html'
@@ -57,8 +57,8 @@ class logView2(TemplateView):
 class achievementsView(TemplateView): 
     template_name = 'healthyfriends/achievements.html'
 
-class profileView(TemplateView): 
-    template_name = 'healthyfriends/profile.html'
+# class profileView(TemplateView): 
+#     template_name = 'healthyfriends/profile.html'
 
 class leaderboardView(TemplateView): 
     template_name = 'healthyfriends/leaderboard.html'
