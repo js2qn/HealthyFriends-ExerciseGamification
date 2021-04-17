@@ -28,7 +28,6 @@
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
               {% if user.is_authenticated %}
               <ul class="navbar-nav">
-                <a id="profile_nav" class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                 <a id="log_nav" class="nav-item nav-link" href="{% url 'fitnesslog' %}">Fitness Log</a>
                 <a id="achievements_nav" class="nav-item nav-link" href="{% url 'achievements' %}">Achievements</a>
                 <a id="leaderboard_nav" class="nav-item nav-link" href="{% url 'leaderboard' %}">Leaderboard</a>
