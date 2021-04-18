@@ -11,17 +11,18 @@
 {% block content %}
   {% if goals_list %}
     {% for goal in goals_list %}
+    {% with goal.id|stringformat:"s" as goalid %}
       <div class="container">
         <div class="row">
           <div class="col-8">
             <div class="card">
               <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs" id="goal_{{goal.id}}" role="tablist">
+                <ul class="nav nav-tabs card-header-tabs" id="goal-{{goalid}}" role="tablist">
                   <li class="nav-item">
-                    <a class="nav-link active" id="progress-tab-{{goal.id}}" data-toggle="tab" href="#progress{{goal.id}}" role="tab" aria-controls="progress-{{goal.id}}" aria-selected="true">Progress</a>
+                    <a class="nav-link active" id="progress-tab-{{goalid}}" data-toggle="tab" href="#progress-{{goalid}}" role="tab" aria-controls="progress-{{goalid}}" aria-selected="true">Progress</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link"  id="update-tab-{{goal.id}}" href="#update{{goal.id}}" data-toggle="tab" role="tab" aria-controls="update-{{goal.id}}" aria-selected="false">Update</a>
+                    <a class="nav-link"  id="update-tab-goalid" href="#update-{{goalid}}" data-toggle="tab" role="tab" aria-controls="update-{{goalid}}" aria-selected="false">Update</a>
                   </li>
                 </ul>
               </div>
@@ -30,7 +31,7 @@
                 <h6 class="card-subtitle mb-2">Last Updated: {{goal.last_update}}</h6>
                 
                 <div class="tab-content mt-3">
-                  <div class="tab-pane active" id="progress-{{goal.id}}" role="tabpanel" aria-labelledby="progress-tab-{{goal.id}}">
+                  <div class="tab-pane active" id="progress-{{goalid}}" role="tabpanel" aria-labelledby="progress-tab-{{goal.id}}">
                     <div class="progress">
                       <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width:{{goal.current_progress|mul:100|intdiv:goal.desired_progress}}%" aria-valuenow="{{ goal.current_progress }}|intdiv:{{ goal.desired_progress }}" aria-valuemin="0" aria-valuemax="100">
                         {{goal.current_progress}} / {{goal.desired_progress}} {{goal.metric}}
@@ -38,7 +39,7 @@
                     </div>
                   </div>
 
-                  <div class="tab-pane" id="update-{{goal.id}}" role="tabpanel" aria-labelledby="update-tab-{{goal.id}}">  
+                  <div class="tab-pane" id="update-{{goalid}}" role="tabpanel" aria-labelledby="update-tab-{{goalid}}">  
                     {{goal.id}}
                     <a href="#" class="card-link text-danger">Read more</a>
                   </div>
@@ -49,7 +50,7 @@
         </div>
       </div>
         <br>
-    
+    {% endwith %}
     {% endfor %}
   {% else %}
       <p>You have no saved goals.</p>
