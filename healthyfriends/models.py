@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import calendar
 
 # Create your models here.
 class Workouts(models.Model): 
@@ -8,6 +9,14 @@ class Workouts(models.Model):
     length = models.DecimalField(max_digits=4, decimal_places=1)
     workoutType = models.CharField(max_length=200)
     calories = models.IntegerField()
+    points = 1
+
+    def __str__(self):
+        #return calendar.month_name[self.date.month]
+        return calendar.month_name[self.date.month] + " " + str(self.date.day)
+
+    def __int__(self):
+        return self.points
 
 class Profile(models.Model): 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -16,8 +25,8 @@ class Profile(models.Model):
     weight = models.DecimalField(max_digits=4, decimal_places=1)
     height = models.DecimalField(max_digits=3, decimal_places=1)
 
-class Goals(models.Model): 
-    name = models.CharField(max_length=200) 
+class Goals(models.Model):
+    name = models.CharField(max_length=200)
     points = models.IntegerField()
 
 class Videos(models.Model):
