@@ -11,43 +11,45 @@
 {% block content %}
   {% if goals_list %}
     {% for goal in goals_list %}
-    <div class="container">
-      <div class="row">
-        <div class="col-8">
-          <div class="card">
-            <div class="card-header">
-              <ul class="nav nav-tabs card-header-tabs" id="bologna-list" role="tablist">
-                <li class="nav-item">
-                  <a class="nav-link active" href="#description" role="tab" aria-controls="description" aria-selected="true">Description</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link"  href="#history" role="tab" aria-controls="history" aria-selected="false">History</a>
-                </li>
-              </ul>
-            </div>
-            <div class="card-body">
-              <h4 class="card-title">{{goal.description}}</h4>
-              <h6 class="card-subtitle mb-2">Last Updated: {{goal.last_update}}</h6>
-              
-              <div class="tab-content mt-3">
-                <div class="tab-pane active" id="description" role="tabpanel">
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width:{{goal.current_progress|mul:100|intdiv:goal.desired_progress}}%" aria-valuenow="{{ goal.current_progress }}|intdiv:{{ goal.desired_progress }}" aria-valuemin="0" aria-valuemax="100">
+      <div class="container">
+        <div class="row">
+          <div class="col-8">
+            <div class="card">
+              <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs" id="goal_{{goal.id}}" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="progress-tab-{{goal.id}}" data-toggle="tab" href="#progress{{goal.id}}" role="tab" aria-controls="progress-{{goal.id}}" aria-selected="true">Progress</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link"  id="update-tab-{{goal.id}}" href="#update{{goal.id}}" data-toggle="tab" role="tab" aria-controls="update-{{goal.id}}" aria-selected="false">Update</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">{{goal.description}}</h4>
+                <h6 class="card-subtitle mb-2">Last Updated: {{goal.last_update}}</h6>
+                
+                <div class="tab-content mt-3">
+                  <div class="tab-pane active" id="progress-{{goal.id}}" role="tabpanel" aria-labelledby="progress-tab-{{goal.id}}">
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width:{{goal.current_progress|mul:100|intdiv:goal.desired_progress}}%" aria-valuenow="{{ goal.current_progress }}|intdiv:{{ goal.desired_progress }}" aria-valuemin="0" aria-valuemax="100">
+                        {{goal.current_progress}} / {{goal.desired_progress}} {{goal.metric}}
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div class="tab-pane" id="history" role="tabpanel" aria-labelledby="history-tab">  
-                  <p class="card-text">First settled around 1000 BCE and then founded as the Etruscan Felsina about 500 BCE, it was occupied by the Boii in the 4th century BCE and became a Roman colony and municipium with the name of Bononia in 196 BCE. </p>
-                  <a href="#" class="card-link text-danger">Read more</a>
+                  <div class="tab-pane" id="update-{{goal.id}}" role="tabpanel" aria-labelledby="update-tab-{{goal.id}}">  
+                    {{goal.id}}
+                    <a href="#" class="card-link text-danger">Read more</a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-      <br>
+        <br>
+    
     {% endfor %}
   {% else %}
       <p>You have no saved goals.</p>
