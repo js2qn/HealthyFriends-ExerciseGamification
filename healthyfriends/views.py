@@ -57,6 +57,9 @@ class logView2(TemplateView):
 class achievementsView(TemplateView): 
     template_name = 'healthyfriends/achievements.html'
 
+class goalsView(TemplateView): 
+    template_name = 'healthyfriends/goals.html'
+
 # class profileView(TemplateView): 
 #     template_name = 'healthyfriends/profile.html'
 
