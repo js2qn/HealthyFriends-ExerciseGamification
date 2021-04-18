@@ -40,7 +40,24 @@
                   </div>
 
                   <div class="tab-pane" id="update-{{goalid}}" role="tabpanel" aria-labelledby="update-tab-{{goalid}}">  
-                    {{goal.id}}
+                    <form>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="quantified-btn" name="goal-type" value="Y-Metrics" checked>
+                        <label class="form-check-label" for="quantified-btn">Track Metrics</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="textual-btn" name="goal-type" value="N-Metrics">
+                        <label class="form-check-label" for="textual-btn">Ignore Metrics</label>
+                      </div><br>
+                      <label for="description-{{goalid}}">Description:</label>
+                      <input type="text" id="description-{{goalid}}" name="description-{{goalid}}"></input><br>
+                      <label for="current-{{goalid}}">Current Progress:</label>
+                      <input type="text" id="current-{{goalid}}" name="current-{{goalid}}"></input><br>
+                      <label for="desired-{{goalid}}">Desired Goal:</label>
+                      <input type="text" id="desired-{{goalid}}" name="desired-{{goalid}}"></input><br>
+                      <label for="metric-{{goalid}}">Measured By:</label>
+                      <input type="text" id="metric-{{goalid}}" name="metric-{{goalid}}"></input><br>
+                    </form>
                     <a href="#" class="card-link text-danger">Read more</a>
                   </div>
                 </div>
