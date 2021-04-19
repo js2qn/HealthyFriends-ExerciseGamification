@@ -62,6 +62,27 @@ class achievementsView(ListView):
     def get_queryset(self):
         return Goals.objects.all()
 
+def update_Goal(request):
+    goal_id = request.POST.get("id")
+    goal = get_object_or_404(Goals, pk=goal_id)
+
+    if(request.POST.get("metrics-toggle-" + goal_id) == "Y-Metrics"):
+        goal.description = request.POST.get("description-" + goal_id)
+        goal.current_progress = request.POST.get("current-" + goal_id)
+        goal.desired_progress = request.POST.get("desired-" + goal_id)
+        goal.metric = request.POST.get("metric-" + goal_id)
+        goal.goal_type = "Y-Metrics"
+        goal.last_update = date.today()
+    elif(request.POST.get("metrics-toggle-" + goal_id) == "N-Metrics")
+        goal.description = request.POST.get("description-" + goal_id)
+        goal.current_progress = 0.00
+        goal.desired_progress = 1.00
+        goal.metric = ""
+        goal.goal_type = "N-Metrics"
+        goal.last_update = date.today()
+
+    goal.save()
+    return # this is where I stopped
 class profileView(TemplateView): 
     template_name = 'healthyfriends/profile.html'
 

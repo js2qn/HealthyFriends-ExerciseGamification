@@ -33,32 +33,79 @@
                 <div class="tab-content mt-3">
                   <div class="tab-pane active" id="progress-{{goalid}}" role="tabpanel" aria-labelledby="progress-tab-{{goal.id}}">
                     <div class="progress">
-                      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width:{{goal.current_progress|mul:100|intdiv:goal.desired_progress}}%" aria-valuenow="{{ goal.current_progress }}|intdiv:{{ goal.desired_progress }}" aria-valuemin="0" aria-valuemax="100">
+                      <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" style="width:{{goal.current_progress|mul:100|intdiv:goal.desired_progress}}%; color:black; font-weight:bold" aria-valuenow="{{ goal.current_progress }}|intdiv:{{ goal.desired_progress }}" aria-valuemin="0" aria-valuemax="100">
                         {{goal.current_progress}} / {{goal.desired_progress}} {{goal.metric}}
                       </div>
                     </div>
                   </div>
 
                   <div class="tab-pane" id="update-{{goalid}}" role="tabpanel" aria-labelledby="update-tab-{{goalid}}">  
-                    <form>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="quantified-btn" name="goal-type" value="Y-Metrics" checked>
-                        <label class="form-check-label" for="quantified-btn">Track Metrics</label>
+                    <form action="" method="POST">
+                      {% csrf_token %}
+
+                      <input type='hidden' value='{{goal.id}}' name='id'>
+
+                      <textarea type="text" class="form-control" id="description-{{goalid}}" name="description-{{goalid}}" placeholder="{{goal.description}}"></textarea><br>
+
+
+                      <script type="text/javascript">
+                        function noMetrics(el1, el2, el3) {
+                          var e1 = document.getElementById(el1);
+                          var e2 = document.getElementById(el2);
+                          var e3 = document.getElementById(el3);
+
+                          if(e1.disabled){
+                            e1.disabled = false;
+                          } else {
+                            e1.disabled = true;
+                          }
+
+                          if(e2.disabled){
+                            e2.disabled = false;
+                          } else {
+                            e2.disabled = true;
+                          }
+                          
+                          if(e3.disabled){
+                            e3.disabled = false;
+                          } else {
+                            e3.disabled = true;
+                          }
+                        }
+                      </script>
+
+
+                      <div class="form-row">
+                        <div class="col">
+                          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-outline-info active">
+                              <input onchange="noMetrics('metric-{{goalid}}', 'current-{{goalid}}', 'desired-{{goalid}}');" type="radio" name="metrics-toggle-{{goalid}}" id="toggle1-{{goalid}}" value="Y-Metrics" checked> Track Metrics
+                            </label>
+                            <label class="btn btn-outline-info">
+                              <input onchange="noMetrics('metric-{{goalid}}', 'current-{{goalid}}', 'desired-{{goalid}}');" type="radio" name="metrics-toggle-{{goalid}}" id="toggle2-{{goalid}}" value="N-Metrics"> Ignore Metrics
+                            </label>
+                          </div>
+                        </div>
+
+                        <div class="col">
+                          <input type="text" class="form-control" id="metric-{{goalid}}" name="metric-{{goalid}}" placeholder="{{goal.metric}}"></input><br>
+                        </div>
                       </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="textual-btn" name="goal-type" value="N-Metrics">
-                        <label class="form-check-label" for="textual-btn">Ignore Metrics</label>
-                      </div><br>
-                      <label for="description-{{goalid}}">Description:</label>
-                      <input type="text" id="description-{{goalid}}" name="description-{{goalid}}"></input><br>
-                      <label for="current-{{goalid}}">Current Progress:</label>
-                      <input type="text" id="current-{{goalid}}" name="current-{{goalid}}"></input><br>
-                      <label for="desired-{{goalid}}">Desired Goal:</label>
-                      <input type="text" id="desired-{{goalid}}" name="desired-{{goalid}}"></input><br>
-                      <label for="metric-{{goalid}}">Measured By:</label>
-                      <input type="text" id="metric-{{goalid}}" name="metric-{{goalid}}"></input><br>
+
+                      <div class="form-row">
+                        <div class="col">
+                          <input type="text" class="form-control" id="current-{{goalid}}" name="current-{{goalid}}" placeholder="{{ goal.current_progress|stringformat:"s" }}"></input><br>
+                        </div>
+                        <div class="col">
+                          <input type="text" class="form-control" id="desired-{{goalid}}" name="desired-{{goalid}}" placeholder="{{ goal.desired_progress|stringformat:"s" }}"></input><br>
+                        </div>
+                      </div>
+                      
+                      <input style="border:none" type="submit" class="btn-block btn-lg btn-info" value="Update">
                     </form>
-                    <a href="#" class="card-link text-danger">Read more</a>
+
+                    
+
                   </div>
                 </div>
               </div>
