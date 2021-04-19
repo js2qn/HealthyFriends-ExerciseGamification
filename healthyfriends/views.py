@@ -78,7 +78,7 @@ def updateGoal(request):
     goal = get_object_or_404(Goals, pk=goal_id)
     
     if (request.POST.get("descrp") == ''):
-        return render(request, 'healthyfriends/achievements.html', {
+        return render(request, 'healthyfriends/goals.html', {
             'error_message': "Please Add A Description."
         })
 
@@ -87,7 +87,7 @@ def updateGoal(request):
         met = "metric-" + goal_id
         
         if (request.POST.get(cur) == '' or request.POST.get(des) == ''):
-            return render(request, 'healthyfriends/achievements.html',{
+            return render(request, 'healthyfriends/goals.html',{
                 'error_message': "Please fill both progess fields to update."
             })
 
@@ -125,7 +125,7 @@ def addGoal(request):
         met = request.POST.get("metric-add")
 
         if (descrp == "" or met == "" or cur == "" or des == ""):
-            return render(request, 'healthyfriends/achievements.html', {
+            return render(request, 'healthyfriends/goals.html', {
                 'goalsInProgress': Goals.objects.filter(desired_progress__gt=F('current_progress')).order_by('-last_update'),
                 'goalsCompleted': Goals.objects.filter(desired_progress__lte=F('current_progress')).order_by('-last_update'),
                 'error_message': "Please fill all available fields to add goal.",
@@ -134,11 +134,11 @@ def addGoal(request):
             cur_decimal = round(Decimal(cur), 2)
             des_decimal = round(Decimal(des), 2)
             goal = Goals.objects.create(description=descrp, current_progress=cur_decimal, desired_progress=des_decimal, metric=met, goal_type="Y-Metrics")
-            return HttpResponseRedirect(reverse('achievements'))
+            return HttpResponseRedirect(reverse('goals'))
 
     if (mt == "N-Metrics"):
         if (descrp == "" or cur == ""):
-            return render(request, 'healthyfriends/achievements.html', {
+            return render(request, 'healthyfriends/goals.html', {
                 'goalsInProgress': Goals.objects.filter(desired_progress__gt=F('current_progress')).order_by('-last_update'),
                 'goalsCompleted': Goals.objects.filter(desired_progress__lte=F('current_progress')).order_by('-last_update'),
                 'error_message': "Please fill all available fields to add goal.",
@@ -146,14 +146,14 @@ def addGoal(request):
         else:
             cur_decimal = round(Decimal(cur), 2)
             goal = Goals.objects.create(description=descrp, current_progress=cur_decimal, goal_type="N-Metrics")
-            return HttpResponseRedirect(reverse('achievements'))
+            return HttpResponseRedirect(reverse('goals'))
 
 
 def deleteGoal(request):
     idToDel = int(request.POST.get("id"))
     Goals.objects.filter(id=idToDel).delete()
 
-    return HttpResponseRedirect(reverse('achievements'))
+    return HttpResponseRedirect(reverse('goals'))
 
 
 ###################################################################################
