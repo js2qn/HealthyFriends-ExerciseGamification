@@ -40,5 +40,7 @@ urlpatterns = [
     path('addInForum/', views.addInForum, name="addInForum"),
     path('addInDiscussion/', views.addInDiscussion, name = 'addInDiscussion'),
     # added for goals by Jayden
-    path('updateGoal/', views.updateGoal, name='updateGoal'),
+    path('updateGoal/', views.updateGoal, name = 'updateGoal'),
+    path('addGoal/', views.addGoal, name = 'addGoal'),
+    path('deleteGoal/', views.deleteGoal, name='deleteGoal'),
 ]

@@ -9,6 +9,9 @@
 {% endblock %}
 
 {% block content %}
+
+  {% if error_message%}<p style="color: red"><strong>{{error_message}}</strong></p>{% endif %}
+
   <div class="container">
     <div class="row">
       <div class="col-8">
@@ -26,8 +29,13 @@
                             <a class="nav-link active" style="color:black" id="progress-tab-{{goalid}}" data-toggle="tab" href="#progress-{{goalid}}" role="tab" aria-controls="progress-{{goalid}}" aria-selected="true">Progress</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link"  style="color:black" id="update-tab-goalid" href="#update-{{goalid}}" data-toggle="tab" role="tab" aria-controls="update-{{goalid}}" aria-selected="false">Update</a>
+                            <a class="nav-link"  style="color:black" id="update-tab-{{goalid}}" href="#update-{{goalid}}" data-toggle="tab" role="tab" aria-controls="update-{{goalid}}" aria-selected="false">Update</a>
                           </li>
+                          <!-- added here -->
+                          <li class="nav-item">
+                            <a style="color:red"class="nav-link"  style="color:black" id="delete-tab-{{goalid}}" href="#delete-{{goalid}}" data-toggle="tab" role="tab" aria-controls="delete-{{goalid}}" aria-selected="false">Delete</a>
+                          </li>
+
                         </ul>
                       </div>
                       <div class="card-body">
@@ -53,10 +61,10 @@
 
 
                               <script type="text/javascript">
-                                function noMetrics(el1, el2, el3) {
+                                function noMetrics(el1, el2) {
                                   var e1 = document.getElementById(el1);
                                   var e2 = document.getElementById(el2);
-                                  var e3 = document.getElementById(el3);
+                                  //var e3 = document.getElementById(el3);
 
                                   if(e1.disabled){
                                     e1.disabled = false;
@@ -70,10 +78,18 @@
                                     e2.disabled = true;
                                   }
                                   
-                                  if(e3.disabled){
-                                    e3.disabled = false;
+                                }
+
+                                function allowDelete(el1){
+                                  var e1 = document.getElementById(el1);
+                                  if(e1.disabled){
+                                    e1.disabled = false;
+                                    e1.classList.remove("btn-secondary")
+                                    e1.classList.add('btn-danger')
                                   } else {
-                                    e3.disabled = true;
+                                    e1.disabled = true;
+                                    e1.classList.remove('btn-danger')
+                                    e1.classList.add('btn-secondary')
                                   }
                                 }
                               </script>
@@ -83,10 +99,10 @@
                                 <div class="col">
                                   <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                     <label class="btn btn-outline-info active">
-                                      <input onchange="noMetrics('metric-{{goalid}}', 'current-{{goalid}}', 'desired-{{goalid}}');" type="radio" name="metrics-toggle-{{goalid}}" id="toggle1-{{goalid}}" value="Y-Metrics" checked> Track Metrics
+                                      <input onchange="noMetrics('metric-{{goalid}}', 'desired-{{goalid}}');" type="radio" name="metrics-toggle-{{goalid}}" id="toggle1-{{goalid}}" value="Y-Metrics" checked> Track Metrics
                                     </label>
                                     <label class="btn btn-outline-info">
-                                      <input onchange="noMetrics('metric-{{goalid}}', 'current-{{goalid}}', 'desired-{{goalid}}');" type="radio" name="metrics-toggle-{{goalid}}" id="toggle2-{{goalid}}" value="N-Metrics"> Ignore Metrics
+                                      <input onchange="noMetrics('metric-{{goalid}}', 'desired-{{goalid}}');" type="radio" name="metrics-toggle-{{goalid}}" id="toggle2-{{goalid}}" value="N-Metrics"> Ignore Metrics
                                     </label>
                                   </div>
                                 </div>
@@ -98,7 +114,8 @@
 
                               <div class="form-row">
                                 <div class="col">
-                                  <input type="text" class="form-control" id="current-{{goalid}}" name="current-{{goalid}}" value="{{ goal.current_progress|stringformat:"s" }}"></input><br>
+                                  <input type="text" class="form-control" id="current-{{goalid}}" name="current-{{goalid}}" value="{{ goal.current_progress|stringformat:"s" }}"></input>
+                                  <p style="font-size: 8px">*When 'Ignore Metrics' selected, any value gte 1 indicates completion. Any value lt 1 mean incomplete</p>
                                 </div>
                                 <div class="col">
                                   <input type="text" class="form-control" id="desired-{{goalid}}" name="desired-{{goalid}}" value="{{ goal.desired_progress|stringformat:"s" }}"></input><br>
@@ -108,6 +125,28 @@
                               <input style="border:none" type="submit" class="btn-block btn-lg btn-info" value="Update">
                             </form>
                           </div>
+
+                          <!-- added here-->
+                          <div class="tab-pane" id="delete-{{goalid}}" role="tabpanel" aria-labelledby="delete-tab-{{goalid}}">  
+                            <form action="{% url 'deleteGoal' %}" method="POST">
+                              {% csrf_token %}
+
+                              <input type='hidden' value='{{goal.id}}' name='id'>
+                              <p style="color:red; margin-left: 20px;">WARNING: You will be unable to recover your progress if you press the button below!</p>
+
+                              <div class="form-check">
+                                <input style="display:block; margin-left: 135px; margin-top:7px" onchange="allowDelete('delete-btn-{{goalid}}')" class="form-check-input" type="checkbox" value="" id="delete-check-{{goalid}}">
+                                <label style="margin-left:155px;" class="form-check-label" for="delete-check-{{goalid}}">
+                                  I understand and want to delete this goal.
+                                </label>
+                              </div>
+                              <br>
+
+                              <input disabled id="delete-btn-{{goalid}}" style="border:none" type="submit" class="btn-block btn-lg btn-secondary" value="Delete">
+
+                            </form>
+                          </div>
+
                         </div>
                       </div>
                     </div>
@@ -135,8 +174,11 @@
                               <a class="nav-link active" style="color:black" id="progress-tab-{{goalid}}" data-toggle="tab" href="#progress-{{goalid}}" role="tab" aria-controls="progress-{{goalid}}" aria-selected="true">Progress</a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link"  style="color:black" id="update-tab-goalid" href="#update-{{goalid}}" data-toggle="tab" role="tab" aria-controls="update-{{goalid}}" aria-selected="false">Update</a>
+                              <a class="nav-link"  style="color:black" id="update-tab-{{goalid}}" href="#update-{{goalid}}" data-toggle="tab" role="tab" aria-controls="update-{{goalid}}" aria-selected="false">Update</a>
                             </li>
+                            <li class="nav-item">
+                              <a style="color:#8B0000"class="nav-link"  style="color:black" id="delete-tab-{{goalid}}" href="#delete-{{goalid}}" data-toggle="tab" role="tab" aria-controls="delete-{{goalid}}" aria-selected="false">Delete</a>
+                          </li>
                           </ul>
                         </div>
                         <div class="card-body">
@@ -163,10 +205,10 @@
 
 
                                 <script type="text/javascript">
-                                  function noMetrics(el1, el2, el3) {
+                                  function noMetrics(el1, el2) {
                                     var e1 = document.getElementById(el1);
                                     var e2 = document.getElementById(el2);
-                                    var e3 = document.getElementById(el3);
+                                    //var e3 = document.getElementById(el3);
 
                                     if(e1.disabled){
                                       e1.disabled = false;
@@ -180,12 +222,20 @@
                                       e2.disabled = true;
                                     }
                                     
-                                    if(e3.disabled){
-                                      e3.disabled = false;
-                                    } else {
-                                      e3.disabled = true;
-                                    }
                                   }
+
+                                  function allowDelete(el1){
+                                  var e1 = document.getElementById(el1);
+                                  if(e1.disabled){
+                                    e1.disabled = false;
+                                    e1.classList.remove("btn-secondary")
+                                    e1.classList.add('btn-danger')
+                                  } else {
+                                    e1.disabled = true;
+                                    e1.classList.remove('btn-danger')
+                                    e1.classList.add('btn-secondary')
+                                  }
+                                }
                                 </script>
 
 
@@ -193,10 +243,10 @@
                                   <div class="col">
                                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                       <label class="btn btn-outline-info active">
-                                        <input onchange="noMetrics('metric-{{goalid}}', 'current-{{goalid}}', 'desired-{{goalid}}');" type="radio" name="metrics-toggle-{{goalid}}" id="toggle1-{{goalid}}" value="Y-Metrics" checked> Track Metrics
+                                        <input onchange="noMetrics('metric-{{goalid}}', 'desired-{{goalid}}');" type="radio" name="metrics-toggle-{{goalid}}" id="toggle1-{{goalid}}" value="Y-Metrics" checked> Track Metrics
                                       </label>
                                       <label class="btn btn-outline-info">
-                                        <input onchange="noMetrics('metric-{{goalid}}', 'current-{{goalid}}', 'desired-{{goalid}}');" type="radio" name="metrics-toggle-{{goalid}}" id="toggle2-{{goalid}}" value="N-Metrics"> Ignore Metrics
+                                        <input onchange="noMetrics('metric-{{goalid}}', 'desired-{{goalid}}');" type="radio" name="metrics-toggle-{{goalid}}" id="toggle2-{{goalid}}" value="N-Metrics"> Ignore Metrics
                                       </label>
                                     </div>
                                   </div>
@@ -208,7 +258,8 @@
 
                                 <div class="form-row">
                                   <div class="col">
-                                    <input type="text" class="form-control" id="current-{{goalid}}" name="current-{{goalid}}" value="{{ goal.current_progress|stringformat:"s" }}"></input><br>
+                                    <input type="text" class="form-control" id="current-{{goalid}}" name="current-{{goalid}}" value="{{ goal.current_progress|stringformat:"s" }}"></input>
+                                    <p style="font-size: 8px">*When 'Ignore Metrics' selected, any value gte 1 indicates completion. Any value lt 1 mean incomplete</p>
                                   </div>
                                   <div class="col">
                                     <input type="text" class="form-control" id="desired-{{goalid}}" name="desired-{{goalid}}" value="{{ goal.desired_progress|stringformat:"s" }}"></input><br>
@@ -216,6 +267,26 @@
                                 </div>
                                 
                                 <input style="border:none" type="submit" class="btn-block btn-lg btn-info" value="Update">
+                              </form>
+                            </div>
+
+                            <div class="tab-pane" id="delete-{{goalid}}" role="tabpanel" aria-labelledby="delete-tab-{{goalid}}">  
+                              <form action="{% url 'deleteGoal' %}" method="POST">
+                                {% csrf_token %}
+
+                                <input type='hidden' value='{{goal.id}}' name='id'>
+                                <p style="color:red; margin-left: 20px;">WARNING: You will be unable to recover your progress if you press the button below!</p>
+
+                                <div class="form-check">
+                                  <input style="display:block; margin-left: 135px; margin-top:7px" onchange="allowDelete('delete-btn-{{goalid}}')" class="form-check-input" type="checkbox" value="" id="delete-check-{{goalid}}">
+                                  <label style="margin-left:155px;" class="form-check-label" for="delete-check-{{goalid}}">
+                                    I understand and want to delete this goal.
+                                  </label>
+                                </div>
+                                <br>
+
+                                <input disabled id="delete-btn-{{goalid}}" style="border:none" type="submit" class="btn-block btn-lg btn-secondary" value="Delete">
+
                               </form>
                             </div>
                           </div>
@@ -236,17 +307,17 @@
           <div class="card bg-light">
           <div class="card-body">
           <h5 class="card-title">Add New Goal</h5>
-          <form action="{% url 'updateGoal' %}" method="POST">
+          <form action="{% url 'addGoal' %}" method="POST">
             {% csrf_token %}
 
             <textarea type="text" class="form-control" id="description-add" name="description-add" placeholder="Provide a brief explanation of your goal."></textarea><br>
 
 
             <script type="text/javascript">
-              function noMetrics(el1, el2, el3) {
+              function noMetrics(el1, el2) {
                 var e1 = document.getElementById(el1);
                 var e2 = document.getElementById(el2);
-                var e3 = document.getElementById(el3);
+                //var e3 = document.getElementById(el3);
 
                 if(e1.disabled){
                   e1.disabled = false;
@@ -260,11 +331,6 @@
                   e2.disabled = true;
                 }
                 
-                if(e3.disabled){
-                  e3.disabled = false;
-                } else {
-                  e3.disabled = true;
-                }
               }
             </script>
 
@@ -273,10 +339,10 @@
               <div class="col">
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                   <label class="btn btn-outline-info active">
-                    <input onchange="noMetrics('metric-add', 'current-add', 'desired-add');" type="radio" name="metrics-toggle-add" id="toggle1-add" value="Y-Metrics" checked> Track Metrics
+                    <input onchange="noMetrics('metric-add','desired-add');" type="radio" name="metrics-toggle-add" id="toggle1-add" value="Y-Metrics" checked> Track Metrics
                   </label>
                   <label class="btn btn-outline-info">
-                    <input onchange="noMetrics('metric-add', 'current-add', 'desired-add');" type="radio" name="metrics-toggle-add" id="toggle2-add" value="N-Metrics"> Ignore Metrics
+                    <input onchange="noMetrics('metric-add','desired-add');" type="radio" name="metrics-toggle-add" id="toggle2-add" value="N-Metrics"> Ignore Metrics
                   </label>
                 </div>
               </div>
