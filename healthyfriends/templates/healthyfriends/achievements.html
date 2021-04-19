@@ -9,114 +9,220 @@
 {% endblock %}
 
 {% block content %}
-  {% if goals_list %}
-    {% for goal in goals_list %}
-    {% with goal.id|stringformat:"s" as goalid %}
-      <div class="container">
-        <div class="row">
-          <div class="col-8">
-            <div class="card">
-              <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs" id="goal-{{goalid}}" role="tablist">
-                  <li class="nav-item">
-                    <a class="nav-link active" id="progress-tab-{{goalid}}" data-toggle="tab" href="#progress-{{goalid}}" role="tab" aria-controls="progress-{{goalid}}" aria-selected="true">Progress</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link"  id="update-tab-goalid" href="#update-{{goalid}}" data-toggle="tab" role="tab" aria-controls="update-{{goalid}}" aria-selected="false">Update</a>
-                  </li>
-                </ul>
-              </div>
-              <div class="card-body">
-                <h4 class="card-title">{{goal.description}}</h4>
-                <h6 class="card-subtitle mb-2">Last Updated: {{goal.last_update}}</h6>
-                
-                <div class="tab-content mt-3">
-                  <div class="tab-pane active" id="progress-{{goalid}}" role="tabpanel" aria-labelledby="progress-tab-{{goal.id}}">
-                    <div class="progress">
-                      <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" style="width:{{goal.current_progress|mul:100|intdiv:goal.desired_progress}}%; color:black; font-weight:bold" aria-valuenow="{{ goal.current_progress }}|intdiv:{{ goal.desired_progress }}" aria-valuemin="0" aria-valuemax="100">
-                        {{goal.current_progress}} / {{goal.desired_progress}} {{goal.metric}}
+  {% if goalsInProgress %}
+    {% for goal in goalsInProgress %}
+      {% with goal.id|stringformat:"s" as goalid %}
+        <div class="container">
+          <div class="row">
+            <div class="col-8">
+              <div class="card">
+                <div class="card-header">
+                  <ul class="nav nav-tabs card-header-tabs" id="goal-{{goalid}}" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" style="color:black" id="progress-tab-{{goalid}}" data-toggle="tab" href="#progress-{{goalid}}" role="tab" aria-controls="progress-{{goalid}}" aria-selected="true">Progress</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link"  style="color:black" id="update-tab-goalid" href="#update-{{goalid}}" data-toggle="tab" role="tab" aria-controls="update-{{goalid}}" aria-selected="false">Update</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="card-body">
+                  <h4 class="card-title">{{goal.description}}</h4>
+                  <h6 class="card-subtitle mb-2">Last Updated: {{goal.last_update}}</h6>
+                  
+                  <div class="tab-content mt-3">
+                    <div class="tab-pane active" id="progress-{{goalid}}" role="tabpanel" aria-labelledby="progress-tab-{{goal.id}}">
+                      <div class="progress">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" style="width:{{goal.current_progress|mul:100|intdiv:goal.desired_progress}}%; color:black; font-weight:bold" aria-valuenow="{{ goal.current_progress }}|intdiv:{{ goal.desired_progress }}" aria-valuemin="0" aria-valuemax="100">
+                          {{goal.current_progress}} / {{goal.desired_progress}} {{goal.metric}}
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div class="tab-pane" id="update-{{goalid}}" role="tabpanel" aria-labelledby="update-tab-{{goalid}}">  
-                    <form action="{% url 'updateGoal' %}" method="POST">
-                      {% csrf_token %}
+                    <div class="tab-pane" id="update-{{goalid}}" role="tabpanel" aria-labelledby="update-tab-{{goalid}}">  
+                      <form action="{% url 'updateGoal' %}" method="POST">
+                        {% csrf_token %}
 
-                      <input type='hidden' value='{{goal.id}}' name='id'>
+                        <input type='hidden' value='{{goal.id}}' name='id'>
 
-                      <textarea type="text" class="form-control" id="description-{{goalid}}" name="description-{{goalid}}">{{goal.description}}</textarea><br>
+                        <textarea type="text" class="form-control" id="description-{{goalid}}" name="description-{{goalid}}">{{goal.description}}</textarea><br>
 
 
-                      <script type="text/javascript">
-                        function noMetrics(el1, el2, el3) {
-                          var e1 = document.getElementById(el1);
-                          var e2 = document.getElementById(el2);
-                          var e3 = document.getElementById(el3);
+                        <script type="text/javascript">
+                          function noMetrics(el1, el2, el3) {
+                            var e1 = document.getElementById(el1);
+                            var e2 = document.getElementById(el2);
+                            var e3 = document.getElementById(el3);
 
-                          if(e1.disabled){
-                            e1.disabled = false;
-                          } else {
-                            e1.disabled = true;
+                            if(e1.disabled){
+                              e1.disabled = false;
+                            } else {
+                              e1.disabled = true;
+                            }
+
+                            if(e2.disabled){
+                              e2.disabled = false;
+                            } else {
+                              e2.disabled = true;
+                            }
+                            
+                            if(e3.disabled){
+                              e3.disabled = false;
+                            } else {
+                              e3.disabled = true;
+                            }
                           }
-
-                          if(e2.disabled){
-                            e2.disabled = false;
-                          } else {
-                            e2.disabled = true;
-                          }
-                          
-                          if(e3.disabled){
-                            e3.disabled = false;
-                          } else {
-                            e3.disabled = true;
-                          }
-                        }
-                      </script>
+                        </script>
 
 
-                      <div class="form-row">
-                        <div class="col">
-                          <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                            <label class="btn btn-outline-info active">
-                              <input onchange="noMetrics('metric-{{goalid}}', 'current-{{goalid}}', 'desired-{{goalid}}');" type="radio" name="metrics-toggle-{{goalid}}" id="toggle1-{{goalid}}" value="Y-Metrics" checked> Track Metrics
-                            </label>
-                            <label class="btn btn-outline-info">
-                              <input onchange="noMetrics('metric-{{goalid}}', 'current-{{goalid}}', 'desired-{{goalid}}');" type="radio" name="metrics-toggle-{{goalid}}" id="toggle2-{{goalid}}" value="N-Metrics"> Ignore Metrics
-                            </label>
+                        <div class="form-row">
+                          <div class="col">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                              <label class="btn btn-outline-info active">
+                                <input onchange="noMetrics('metric-{{goalid}}', 'current-{{goalid}}', 'desired-{{goalid}}');" type="radio" name="metrics-toggle-{{goalid}}" id="toggle1-{{goalid}}" value="Y-Metrics" checked> Track Metrics
+                              </label>
+                              <label class="btn btn-outline-info">
+                                <input onchange="noMetrics('metric-{{goalid}}', 'current-{{goalid}}', 'desired-{{goalid}}');" type="radio" name="metrics-toggle-{{goalid}}" id="toggle2-{{goalid}}" value="N-Metrics"> Ignore Metrics
+                              </label>
+                            </div>
+                          </div>
+
+                          <div class="col">
+                            <input type="text" class="form-control" id="metric-{{goalid}}" name="metric-{{goalid}}" value="{{goal.metric}}"></input><br>
                           </div>
                         </div>
 
-                        <div class="col">
-                          <input type="text" class="form-control" id="metric-{{goalid}}" name="metric-{{goalid}}" value="{{goal.metric}}"></input><br>
+                        <div class="form-row">
+                          <div class="col">
+                            <input type="text" class="form-control" id="current-{{goalid}}" name="current-{{goalid}}" value="{{ goal.current_progress|stringformat:"s" }}"></input><br>
+                          </div>
+                          <div class="col">
+                            <input type="text" class="form-control" id="desired-{{goalid}}" name="desired-{{goalid}}" value="{{ goal.desired_progress|stringformat:"s" }}"></input><br>
+                          </div>
                         </div>
-                      </div>
-
-                      <div class="form-row">
-                        <div class="col">
-                          <input type="text" class="form-control" id="current-{{goalid}}" name="current-{{goalid}}" value="{{ goal.current_progress|stringformat:"s" }}"></input><br>
-                        </div>
-                        <div class="col">
-                          <input type="text" class="form-control" id="desired-{{goalid}}" name="desired-{{goalid}}" value="{{ goal.desired_progress|stringformat:"s" }}"></input><br>
-                        </div>
-                      </div>
-                      
-                      <input style="border:none" type="submit" class="btn-block btn-lg btn-info" value="Update">
-                    </form>
-
-                    
-
+                        
+                        <input style="border:none" type="submit" class="btn-block btn-lg btn-info" value="Update">
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-        <br>
-    {% endwith %}
+          <br>
+      {% endwith %}
     {% endfor %}
   {% else %}
-      <p>You have no saved goals.</p>
+    <p>You have no goals in progress.</p>
   {% endif %}
+
+  {% if goalsCompleted %}
+      {% for goal in goalsCompleted %}
+        {% with goal.id|stringformat:"s" as goalid %}
+          <div class="container">
+            <div class="row">
+              <div class="col-8">
+                <div class="card">
+                  <div class="card-header bg-info">
+                    <ul class="nav nav-tabs card-header-tabs" id="goal-{{goalid}}" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" style="color:black" id="progress-tab-{{goalid}}" data-toggle="tab" href="#progress-{{goalid}}" role="tab" aria-controls="progress-{{goalid}}" aria-selected="true">Progress</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link"  style="color:black" id="update-tab-goalid" href="#update-{{goalid}}" data-toggle="tab" role="tab" aria-controls="update-{{goalid}}" aria-selected="false">Update</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{goal.description}}</h4>
+                    <h6 class="card-subtitle mb-2">Last Updated: {{goal.last_update}}</h6>
+                    
+                    <div class="tab-content mt-3">
+                      <div class="tab-pane active" id="progress-{{goalid}}" role="tabpanel" aria-labelledby="progress-tab-{{goal.id}}">
+                        <div class="">
+                          <p style="color:green; font-size: 25px; font-weight: bold;">Completed &#10003;</p>
+                          <!--<div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" style="width:{{goal.current_progress|mul:100|intdiv:goal.desired_progress}}%; color:black; font-weight:bold" aria-valuenow="{{ goal.current_progress }}|intdiv:{{ goal.desired_progress }}" aria-valuemin="0" aria-valuemax="100">
+                            {{goal.current_progress}} / {{goal.desired_progress}} {{goal.metric}}
+                          </div> -->
+                        </div>
+                      </div>
+
+                      <div class="tab-pane" id="update-{{goalid}}" role="tabpanel" aria-labelledby="update-tab-{{goalid}}">  
+                        <form action="{% url 'updateGoal' %}" method="POST">
+                          {% csrf_token %}
+
+                          <input type='hidden' value='{{goal.id}}' name='id'>
+
+                          <textarea type="text" class="form-control" id="description-{{goalid}}" name="description-{{goalid}}">{{goal.description}}</textarea><br>
+
+
+                          <script type="text/javascript">
+                            function noMetrics(el1, el2, el3) {
+                              var e1 = document.getElementById(el1);
+                              var e2 = document.getElementById(el2);
+                              var e3 = document.getElementById(el3);
+
+                              if(e1.disabled){
+                                e1.disabled = false;
+                              } else {
+                                e1.disabled = true;
+                              }
+
+                              if(e2.disabled){
+                                e2.disabled = false;
+                              } else {
+                                e2.disabled = true;
+                              }
+                              
+                              if(e3.disabled){
+                                e3.disabled = false;
+                              } else {
+                                e3.disabled = true;
+                              }
+                            }
+                          </script>
+
+
+                          <div class="form-row">
+                            <div class="col">
+                              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-outline-info active">
+                                  <input onchange="noMetrics('metric-{{goalid}}', 'current-{{goalid}}', 'desired-{{goalid}}');" type="radio" name="metrics-toggle-{{goalid}}" id="toggle1-{{goalid}}" value="Y-Metrics" checked> Track Metrics
+                                </label>
+                                <label class="btn btn-outline-info">
+                                  <input onchange="noMetrics('metric-{{goalid}}', 'current-{{goalid}}', 'desired-{{goalid}}');" type="radio" name="metrics-toggle-{{goalid}}" id="toggle2-{{goalid}}" value="N-Metrics"> Ignore Metrics
+                                </label>
+                              </div>
+                            </div>
+
+                            <div class="col">
+                              <input type="text" class="form-control" id="metric-{{goalid}}" name="metric-{{goalid}}" value="{{goal.metric}}"></input><br>
+                            </div>
+                          </div>
+
+                          <div class="form-row">
+                            <div class="col">
+                              <input type="text" class="form-control" id="current-{{goalid}}" name="current-{{goalid}}" value="{{ goal.current_progress|stringformat:"s" }}"></input><br>
+                            </div>
+                            <div class="col">
+                              <input type="text" class="form-control" id="desired-{{goalid}}" name="desired-{{goalid}}" value="{{ goal.desired_progress|stringformat:"s" }}"></input><br>
+                            </div>
+                          </div>
+                          
+                          <input style="border:none" type="submit" class="btn-block btn-lg btn-info" value="Update">
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+            <br>
+        {% endwith %}
+      {% endfor %}
+    {% else %}
+      <p>You have not completed any of your goals.</p>
+    {% endif %}
 {% endblock %}

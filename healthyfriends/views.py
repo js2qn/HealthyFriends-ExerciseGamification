@@ -9,7 +9,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse
 from django import forms
 from django.urls import reverse
-
+from django.db.models import F
 from .models import *
 from .forms import *
 from decimal import Decimal
@@ -54,6 +54,8 @@ def fitLog(request):
 
 class logView2(TemplateView): 
     template_name = 'healthyfriends/fitnesslog2.html'
+###################################################################################
+###################################################################################
 
 class achievementsView(ListView): 
     template_name = 'healthyfriends/achievements.html'
@@ -61,6 +63,12 @@ class achievementsView(ListView):
 
     def get_queryset(self):
         return Goals.objects.all().order_by('-last_update', 'description')
+
+    def get_context_data(self, **kwargs):
+        context = super(achievementsView, self).get_context_data(**kwargs)
+        context['goalsInProgress'] = Goals.objects.filter(desired_progress__gt=F('current_progress'))
+        context['goalsCompleted'] = Goals.objects.filter(desired_progress__lte=F('current_progress'))
+        return context
 
 def updateGoal(request):
     goal_id = request.POST.get("id")
@@ -101,6 +109,8 @@ def updateGoal(request):
     goal.save()
     return HttpResponseRedirect(reverse('achievements'))  # this is where I stopped
     
+###################################################################################
+###################################################################################
 class profileView(TemplateView): 
     template_name = 'healthyfriends/profile.html'
 

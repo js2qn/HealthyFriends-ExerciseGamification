@@ -26,7 +26,7 @@ class Goals(models.Model):
     description = models.CharField(max_length=50, default='')
     current_progress = models.DecimalField(max_digits=11, decimal_places=2, default=0.00)
     desired_progress = models.DecimalField(max_digits=11, decimal_places=2, default=1.00)
-    metric = models.CharField(max_length=50, default='')
+    metric = models.CharField(max_length=50, default="")
     last_seven_days = ArrayField(models.DecimalField(max_digits=7, decimal_places=2), size=7, default=init_last_seven_days)
 
     QUANTIFIED = 'Y-Metrics'
