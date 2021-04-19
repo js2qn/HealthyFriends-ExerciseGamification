@@ -1,0 +1,13 @@
+{% extends 'healthyfriends/base.html' %}
+{% load static %}
+
+{% load socialaccount %}
+{% providers_media_js %}
+
+{% block title %}
+{{ user.username }}'s Achievements 
+{% endblock %}
+
+{% block content %}
+this will contain user achievements 
+{% endblock %}
