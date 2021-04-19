@@ -112,7 +112,7 @@ def updateGoal(request):
         goal.last_update = date.today()
 
     goal.save()
-    return HttpResponseRedirect(reverse('achievements'))  # this is where I stopped
+    return HttpResponseRedirect(reverse('goals'))  # changed for merge purposes
 
 
 def addGoal(request):
