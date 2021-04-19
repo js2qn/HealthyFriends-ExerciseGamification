@@ -1,16 +1,5 @@
 {% extends 'healthyfriends/base.html' %}
 {% load static %}
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="{% static 'healthyfriends/js/healthyfriends.js' %}"></script>
-</head>
-</html>
 
 {% load socialaccount %}
 {% providers_media_js %}
@@ -22,12 +11,12 @@
 {% block script %}
 <script>
     function calcCalsBurned() {
-        var mets = $("#activites option:selected").val();
+        var mets = $("#activity option:selected").val();
         var weight = $("#weight").val();
-        var time = $("#time").val();
+        var time = $("#length").val();
         var calsBurned = Math.round(mets * 3.5 * (weight / 2.205) / 200 * time);
-        console.log("calculating...", Math.round(calsBurned));
-        $("#calcCalsBurnedResult").html("Calories burned: " + calsBurned);
+        console.log("calculating...", calsBurned);
+        document.getElementById("calsBurnedResult").value = calsBurned;
     }
 </script>
 {% endblock %}
@@ -35,37 +24,47 @@
 <body>
 {% block content %}
 <div class="container">
-	<form method = "POST">
-		{% csrf_token %}
-		<div>
-			<label for="date">Date:</label>
-			<input type="date" class="form-control" id="workoutDate" name="date" style="max-width: 180px;">
-		</div>
-		<div>
-			<label for="length">How long was the workout in minutes?</label>
-			<input type="number" id="lengthOfWorkout" name="length" min="1" max="9999">
-		</div>
-        Activity:
-        <select name="activity" id="activity">
-            <option value="8">Jogging</option>
-            <option value="9.8">Running</option>
-            <option value="4.3">Brisk Walk</option>
-            <option value="5.8">Swimming</option>
-            <option value="2.5">Yoga</option>
-            <option value="12.3">Jumprope</option>
-            <option value="6.8">Stationary Cycling</option>
-            <option value="8">Cycling</option>
-            <option value="4.3">Golf</option>
-            <option value="8.0">Tennis (singles)</option>
-            <option value="6.5">Basketball</option>
-            <option value="7.3">Hiking</option>
-        </select>
-        <div>
-			<label for="calories">(optional) calories burned</label>
-			<input type="number" id="calBurned" name="calories">
-		</div>
-		<button type="submit" class="btn btn-success">Submit</button>
-	<form>
+    <form method="POST">
+        {% csrf_token %}
+        <div style="padding: 10px; display: inline-block;">
+            <label for="date">Date:</label>
+            <input type="date" id="workoutDate" class="form-control" name="date" style="max-width: 180px;">
+        </div>
+        <div style="padding: 10px; display: inline-block;">
+            <label for="length">Workout Length (min)</label>
+            <input type="number" id="length" class="form-control" name="length" min="1" max="9999" style="max-width: 200px;">
+        </div>
+        <div style="padding: 10px; display: inline-block;">
+            <label for="activity">Activity:</label>
+            <select name="activity" id="activity" class="form-control" style="max-width: 200px;">
+                <option value="8">Jogging</option>
+                <option value="9.8">Running</option>
+                <option value="4.3">Brisk Walk</option>
+                <option value="5.8">Swimming</option>
+                <option value="2.5">Yoga</option>
+                <option value="12.3">Jumprope</option>
+                <option value="6.8">Stationary Cycling</option>
+                <option value="8">Cycling</option>
+                <option value="4.3">Golf</option>
+                <option value="8.0">Tennis (singles)</option>
+                <option value="6.5">Basketball</option>
+                <option value="7.3">Hiking</option>
+            </select>
+        </div>
+        <div style="padding: 10px; display: inline-block;">
+            <label for="weight">Weight</label>
+            <input type="number" id="weight" class="form-control" name="weight" style="max-width: 120px;">
+        </div>
+        <div style="padding: 10px; display: inline-block;">
+            <label for="calories">(optional) calories burned</label>
+            <input type="number" id="calsBurnedResult" class="form-control" name="calories" style="max-width: 200px;" value="0">
+        </div>
+        <div class="btn btn-outline-secondary mr-1" style="margin-bottom: 8px; margin-left: 10px; display: inline-block;" onclick="calcCalsBurned()"> Est. Cal.</div>
+        <div class="col-md-12 text-center" style="padding-top: 10px"> 
+            <button type="submit" class="btn btn-success" style="margin-bottom: 6px; margin-left: 10px">Submit Workout</button>
+
+        </div>
+        <form>
 </div>
 {% endblock %}
 </body>
