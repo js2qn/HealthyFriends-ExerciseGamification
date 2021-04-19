@@ -12,7 +12,7 @@ from django.urls import reverse
 
 from .models import *
 from .forms import *
-
+from decimal import Decimal
 # Create your views here.
 
 
@@ -60,21 +60,38 @@ class achievementsView(ListView):
     context_object_name = 'goals_list'
 
     def get_queryset(self):
-        return Goals.objects.all()
+        return Goals.objects.all().order_by('-last_update', 'description')
 
-def update_Goal(request):
+def updateGoal(request):
     goal_id = request.POST.get("id")
+    mt = "metrics-toggle-" + goal_id
+    descrp = "description-" + goal_id
     goal = get_object_or_404(Goals, pk=goal_id)
+    
+    if (request.POST.get("descrp") == ''):
+        return render(request, 'healthyfriends/achievements.html', {
+            'error_message': "Please Add A Description."
+        })
 
-    if(request.POST.get("metrics-toggle-" + goal_id) == "Y-Metrics"):
-        goal.description = request.POST.get("description-" + goal_id)
-        goal.current_progress = request.POST.get("current-" + goal_id)
-        goal.desired_progress = request.POST.get("desired-" + goal_id)
-        goal.metric = request.POST.get("metric-" + goal_id)
+    if (request.POST.get(mt) == "Y-Metrics"):
+        cur = "current-" + goal_id
+        des = "desired-" + goal_id
+        met = "metric-" + goal_id
+        
+        if (request.POST.get(cur) == '' or request.POST.get(des) == ''):
+            return render(request, 'healthyfriends/achievements.html',{
+                'error_message': "Please Fill Both Progess Fields."
+            })
+
+        goal.description = request.POST.get(descrp)
+        goal.current_progress = round(Decimal(request.POST.get(cur)), 2)
+        goal.desired_progress = round(Decimal(request.POST.get(des)), 2)
+        goal.metric = request.POST.get(met)
         goal.goal_type = "Y-Metrics"
         goal.last_update = date.today()
-    elif(request.POST.get("metrics-toggle-" + goal_id) == "N-Metrics")
-        goal.description = request.POST.get("description-" + goal_id)
+
+    elif(request.POST.get(mt) == "N-Metrics"):
+        goal.description = request.POST.get(descrp)
         goal.current_progress = 0.00
         goal.desired_progress = 1.00
         goal.metric = ""
@@ -82,7 +99,8 @@ def update_Goal(request):
         goal.last_update = date.today()
 
     goal.save()
-    return # this is where I stopped
+    return HttpResponseRedirect(reverse('achievements'))  # this is where I stopped
+    
 class profileView(TemplateView): 
     template_name = 'healthyfriends/profile.html'
 

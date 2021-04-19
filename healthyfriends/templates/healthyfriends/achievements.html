@@ -40,12 +40,12 @@
                   </div>
 
                   <div class="tab-pane" id="update-{{goalid}}" role="tabpanel" aria-labelledby="update-tab-{{goalid}}">  
-                    <form action="" method="POST">
+                    <form action="{% url 'updateGoal' %}" method="POST">
                       {% csrf_token %}
 
                       <input type='hidden' value='{{goal.id}}' name='id'>
 
-                      <textarea type="text" class="form-control" id="description-{{goalid}}" name="description-{{goalid}}" placeholder="{{goal.description}}"></textarea><br>
+                      <textarea type="text" class="form-control" id="description-{{goalid}}" name="description-{{goalid}}">{{goal.description}}</textarea><br>
 
 
                       <script type="text/javascript">
@@ -88,16 +88,16 @@
                         </div>
 
                         <div class="col">
-                          <input type="text" class="form-control" id="metric-{{goalid}}" name="metric-{{goalid}}" placeholder="{{goal.metric}}"></input><br>
+                          <input type="text" class="form-control" id="metric-{{goalid}}" name="metric-{{goalid}}" value="{{goal.metric}}"></input><br>
                         </div>
                       </div>
 
                       <div class="form-row">
                         <div class="col">
-                          <input type="text" class="form-control" id="current-{{goalid}}" name="current-{{goalid}}" placeholder="{{ goal.current_progress|stringformat:"s" }}"></input><br>
+                          <input type="text" class="form-control" id="current-{{goalid}}" name="current-{{goalid}}" value="{{ goal.current_progress|stringformat:"s" }}"></input><br>
                         </div>
                         <div class="col">
-                          <input type="text" class="form-control" id="desired-{{goalid}}" name="desired-{{goalid}}" placeholder="{{ goal.desired_progress|stringformat:"s" }}"></input><br>
+                          <input type="text" class="form-control" id="desired-{{goalid}}" name="desired-{{goalid}}" value="{{ goal.desired_progress|stringformat:"s" }}"></input><br>
                         </div>
                       </div>
                       
