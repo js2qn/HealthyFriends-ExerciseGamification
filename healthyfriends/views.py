@@ -57,15 +57,15 @@ class logView2(TemplateView):
 ###################################################################################
 ###################################################################################
 
-class achievementsView(ListView): 
-    template_name = 'healthyfriends/achievements.html'
+class goalsView(ListView): 
+    template_name = 'healthyfriends/goals.html'
     context_object_name = 'goals_list'
 
     def get_queryset(self):
         return Goals.objects.all().order_by('-last_update', 'description')
 
     def get_context_data(self, **kwargs):
-        context = super(achievementsView, self).get_context_data(**kwargs)
+        context = super(goalsView, self).get_context_data(**kwargs)
         context['goalsInProgress'] = Goals.objects.filter(desired_progress__gt=F('current_progress')).order_by('-last_update')
         context['goalsCompleted'] = Goals.objects.filter(desired_progress__lte=F('current_progress')).order_by('-last_update')
         return context
