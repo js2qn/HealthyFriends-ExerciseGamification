@@ -23,15 +23,16 @@ from django.contrib.auth.decorators import login_required
 app_name = 'healthyfriends'
 urlpatterns = [
     path('', views.indexView.as_view(), name='index'),
-    path('login/', views.loginView.as_view(), name='login'),
+    # path('login/', views.loginView.as_view(), name='login'),
     path('logout', views.logout, name='logout'),
     path('home/', login_required(views.homeView.as_view()), name='home'),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('profile/', login_required(views.profileView.as_view()), name='profile'),
+    # path('profile/', login_required(views.profileView.as_view()), name='profile'),
     path('fitnesslog/', login_required(views.fitLog), name='fitnesslog'),
     path('fitnesslog2/', login_required(views.logView2.as_view()), name='fitnesslog2'),
     path('achievements/', login_required(views.achievementsView.as_view()), name='achievements'),
+    path('goals/', login_required(views.goalsView.as_view()), name='goals'),
     path('leaderboard/', login_required(views.leaderboardView.as_view()), name='leaderboard'),
     # path('forum/', login_required(views.forumView.as_view()), name='forum'),
     # forum, addInForum, and addInDiscussion URLS taken from the following tutorial: https://data-flair.training/blogs/discussion-forum-python-django/ 

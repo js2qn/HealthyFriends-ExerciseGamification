@@ -20,8 +20,8 @@ def logout(request):
     auth_logout(request)
     return redirect('index')
 
-class loginView(TemplateView): 
-    template_name = 'healthyfriends/login.html'
+# class loginView(TemplateView): 
+#     template_name = 'healthyfriends/login.html'
 
 class indexView(TemplateView): 
     template_name = 'healthyfriends/index.html'

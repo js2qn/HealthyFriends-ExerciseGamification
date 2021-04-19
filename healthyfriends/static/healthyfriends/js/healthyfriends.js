@@ -17,6 +17,10 @@ function setActivePage() {
         document.getElementById("achievements_nav").classList.add('active');
         document.title = 'My Achievements'
     }
+    else if (currentPage == '/goals/') { 
+        document.getElementById("goals_nav").classList.add('active');
+        document.title = 'My Goals'
+    }
     else if (currentPage == '/leaderboard/') { 
         document.getElementById("leaderboard_nav").classList.add('active');
         document.title = 'Leaderboard'
