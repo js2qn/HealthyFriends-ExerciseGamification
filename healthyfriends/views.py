@@ -74,6 +74,7 @@ def updateGoal(request):
     goal_id = request.POST.get("id")
     mt = "metrics-toggle-" + goal_id
     descrp = "description-" + goal_id
+    cur = "current-" + goal_id
     goal = get_object_or_404(Goals, pk=goal_id)
     
     if (request.POST.get("descrp") == ''):
@@ -82,13 +83,12 @@ def updateGoal(request):
         })
 
     if (request.POST.get(mt) == "Y-Metrics"):
-        cur = "current-" + goal_id
         des = "desired-" + goal_id
         met = "metric-" + goal_id
         
         if (request.POST.get(cur) == '' or request.POST.get(des) == ''):
             return render(request, 'healthyfriends/achievements.html',{
-                'error_message': "Please Fill Both Progess Fields."
+                'error_message': "Please fill both progess fields to update."
             })
 
         goal.description = request.POST.get(descrp)
@@ -100,7 +100,12 @@ def updateGoal(request):
 
     elif(request.POST.get(mt) == "N-Metrics"):
         goal.description = request.POST.get(descrp)
-        goal.current_progress = 0.00
+        
+        if(round(Decimal(request.POST.get(cur)), 2) >= 1):
+            goal.current_progress = 1.00
+        elif (round(Decimal(request.POST.get(cur)), 2) >= 0 and round(Decimal(request.POST.get(cur)), 2) < 1):
+            goal.current_progress = 0.00
+         
         goal.desired_progress = 1.00
         goal.metric = ""
         goal.goal_type = "N-Metrics"
@@ -108,7 +113,49 @@ def updateGoal(request):
 
     goal.save()
     return HttpResponseRedirect(reverse('achievements'))  # this is where I stopped
-    
+
+
+def addGoal(request):
+    descrp = request.POST.get("description-add")
+    mt = request.POST.get("metrics-toggle-add")
+    cur = request.POST.get("current-add")
+
+    if (mt == "Y-Metrics"):
+        des = request.POST.get("desired-add")
+        met = request.POST.get("metric-add")
+
+        if (descrp == "" or met == "" or cur == "" or des == ""):
+            return render(request, 'healthyfriends/achievements.html', {
+                'goalsInProgress': Goals.objects.filter(desired_progress__gt=F('current_progress')).order_by('-last_update'),
+                'goalsCompleted': Goals.objects.filter(desired_progress__lte=F('current_progress')).order_by('-last_update'),
+                'error_message': "Please fill all available fields to add goal.",
+        })
+        else:
+            cur_decimal = round(Decimal(cur), 2)
+            des_decimal = round(Decimal(des), 2)
+            goal = Goals.objects.create(description=descrp, current_progress=cur_decimal, desired_progress=des_decimal, metric=met, goal_type="Y-Metrics")
+            return HttpResponseRedirect(reverse('achievements'))
+
+    if (mt == "N-Metrics"):
+        if (descrp == "" or cur == ""):
+            return render(request, 'healthyfriends/achievements.html', {
+                'goalsInProgress': Goals.objects.filter(desired_progress__gt=F('current_progress')).order_by('-last_update'),
+                'goalsCompleted': Goals.objects.filter(desired_progress__lte=F('current_progress')).order_by('-last_update'),
+                'error_message': "Please fill all available fields to add goal.",
+        })
+        else:
+            cur_decimal = round(Decimal(cur), 2)
+            goal = Goals.objects.create(description=descrp, current_progress=cur_decimal, goal_type="N-Metrics")
+            return HttpResponseRedirect(reverse('achievements'))
+
+
+def deleteGoal(request):
+    idToDel = int(request.POST.get("id"))
+    Goals.objects.filter(id=idToDel).delete()
+
+    return HttpResponseRedirect(reverse('achievements'))
+
+
 ###################################################################################
 ###################################################################################
 class profileView(TemplateView): 
