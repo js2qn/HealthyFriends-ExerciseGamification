@@ -54,6 +54,9 @@ def fitLog(request):
 
 class logView2(TemplateView): 
     template_name = 'healthyfriends/fitnesslog2.html'
+
+class achievementsView(ListView): 
+    template_name = 'healthyfriends/achievements.html'
 ###################################################################################
 ###################################################################################
 
