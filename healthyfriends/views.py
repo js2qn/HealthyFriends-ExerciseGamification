@@ -66,8 +66,8 @@ class achievementsView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(achievementsView, self).get_context_data(**kwargs)
-        context['goalsInProgress'] = Goals.objects.filter(desired_progress__gt=F('current_progress'))
-        context['goalsCompleted'] = Goals.objects.filter(desired_progress__lte=F('current_progress'))
+        context['goalsInProgress'] = Goals.objects.filter(desired_progress__gt=F('current_progress')).order_by('-last_update')
+        context['goalsCompleted'] = Goals.objects.filter(desired_progress__lte=F('current_progress')).order_by('-last_update')
         return context
 
 def updateGoal(request):
