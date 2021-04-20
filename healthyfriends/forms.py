@@ -5,9 +5,9 @@ from .models import *
 class CreateInForum(ModelForm):
     class Meta:
         model = ForumPost
-        fields = "__all__"
+        fields = ('topic', 'description')
 
 class CreateInDiscussion(ModelForm):
     class Meta:
         model = Discussion
-        fields = "__all__"
+        fields = ('forum', 'discuss')
