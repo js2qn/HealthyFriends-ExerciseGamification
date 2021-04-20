@@ -22,49 +22,50 @@
 {% endblock %}
 
 <body>
-    {% block content %}
-    <div class="container">
-        <form method="POST">
-            {% csrf_token %}
-            <div style="padding: 10px; display: inline-block;">
-                <label for="date">Date:</label>
-                <input type="date" id="workoutDate" class="form-control" name="date" style="max-width: 200px;">
-            </div>
-            <div style="padding: 10px; display: inline-block;">
-                <label for="length">Workout Length (minutes)</label>
-                <input type="number" id="length" class="form-control" name="length" min="1" max="9999" style="max-width: 200px;">
-            </div>
-            <div style="padding: 10px; display: inline-block;">
-                <label for="activity">Activity:</label>
-                <select name="activity" id="activity" class="form-control" style="max-width: 200px;">
-                    <option value="8">Jogging</option>
-                    <option value="9.8">Running</option>
-                    <option value="4.3">Brisk Walk</option>
-                    <option value="5.8">Swimming</option>
-                    <option value="2.5">Yoga</option>
-                    <option value="12.3">Jumprope</option>
-                    <option value="6.8">Stationary Cycling</option>
-                    <option value="8">Cycling</option>
-                    <option value="4.3">Golf</option>
-                    <option value="8.0">Tennis (singles)</option>
-                    <option value="6.5">Basketball</option>
-                    <option value="7.3">Hiking</option>
-                </select>
-            </div>
-            <div style="padding: 10px; display: inline-block;">
-                <label for="weight">Weight</label>
-                <input type="number" id="weight" class="form-control" name="weight" style="max-width: 200px;">
-            </div>
-            <div style="padding: 10px; display: inline-block;">
-                <label for="calories">(optional) calories burned</label>
-                <input type="number" id="calsBurnedResult" class="form-control" name="calories" style="max-width: 200px;" value="0">
-            </div>
-            <div style="padding: 4px">
-                <a class="btn btn-outline-secondary mr-1" onclick="calcCalsBurned()" style>Push to estimate calories</a>
-            </div>
+{% block content %}
+<div class="container">
+    <form method="POST">
+        {% csrf_token %}
+        <div style="padding: 10px; display: inline-block;">
+            <label for="date">Date:</label>
+            <input type="date" id="workoutDate" class="form-control" name="date" style="max-width: 180px;">
+        </div>
+        <div style="padding: 10px; display: inline-block;">
+            <label for="length">Workout Length (min)</label>
+            <input type="number" id="length" class="form-control" name="length" min="1" max="9999" style="max-width: 200px;">
+        </div>
+        <div style="padding: 10px; display: inline-block;">
+            <label for="activity">Activity:</label>
+            <select name="activity" id="activity" class="form-control" style="max-width: 200px;">
+                <option value="8">Jogging</option>
+                <option value="9.8">Running</option>
+                <option value="4.3">Brisk Walk</option>
+                <option value="5.8">Swimming</option>
+                <option value="2.5">Yoga</option>
+                <option value="12.3">Jumprope</option>
+                <option value="6.8">Stationary Cycling</option>
+                <option value="8">Cycling</option>
+                <option value="4.3">Golf</option>
+                <option value="8.0">Tennis (singles)</option>
+                <option value="6.5">Basketball</option>
+                <option value="7.3">Hiking</option>
+            </select>
+        </div>
+        <div style="padding: 10px; display: inline-block;">
+            <label for="weight">Weight</label>
+            <input type="number" id="weight" class="form-control" name="weight" style="max-width: 120px;">
+        </div>
+        <div style="padding: 10px; display: inline-block;">
+            <label for="calories">(optional) calories burned</label>
+            <input type="number" id="calsBurnedResult" class="form-control" name="calories" style="max-width: 200px;" value="0">
+        </div>
+        <div class="btn btn-outline-secondary mr-1" style="margin-bottom: 8px; margin-left: 10px; display: inline-block;" onclick="calcCalsBurned()"> Est. Cal.</div>
+        <div class="col-md-12 text-center" style="padding-top: 10px"> 
             <button type="submit" class="btn btn-success" style="margin-bottom: 6px; margin-left: 10px">Submit Workout</button>
-            <form>
-    </div>
-    <img src={{ quickchart_url }}>
-    {% endblock %}
+
+        </div>
+        <form>
+</div>
+    <img src={{ quickchart_url }}
+{% endblock %}
 </body>

@@ -20,8 +20,8 @@ def logout(request):
     auth_logout(request)
     return redirect('index')
 
-class loginView(TemplateView): 
-    template_name = 'healthyfriends/login.html'
+# class loginView(TemplateView): 
+#     template_name = 'healthyfriends/login.html'
 
 class indexView(TemplateView): 
     template_name = 'healthyfriends/index.html'
@@ -63,8 +63,11 @@ class logView2(TemplateView):
 class achievementsView(TemplateView): 
     template_name = 'healthyfriends/achievements.html'
 
-class profileView(TemplateView): 
-    template_name = 'healthyfriends/profile.html'
+class goalsView(TemplateView): 
+    template_name = 'healthyfriends/goals.html'
+
+# class profileView(TemplateView): 
+#     template_name = 'healthyfriends/profile.html'
 
 class leaderboardView(TemplateView): 
     template_name = 'healthyfriends/leaderboard.html'
@@ -92,7 +95,7 @@ def forum(request):
         'discussions':discussions
     }
     print(discussions)
-    return render(request, 'healthyFriends/forum.html', context)
+    return render(request, 'healthyfriends/forum.html', context)
 
 def addInForum(request):
     form = CreateInForum()
@@ -102,7 +105,7 @@ def addInForum(request):
             form.save()
             return redirect('forum')
     context = {'form':form}
-    return render(request, 'healthyFriends/addInForum.html', context)
+    return render(request, 'healthyfriends/addInForum.html', context)
 
 def addInDiscussion(request):
     form = CreateInDiscussion()
@@ -112,7 +115,7 @@ def addInDiscussion(request):
             form.save()
             return redirect('forum')
     context={'form':form}
-    return render(request, 'healthyFriends/addInDiscussion.html', context)
+    return render(request, 'healthyfriends/addInDiscussion.html', context)
 # end not our IP
 class guidesView(ListView): 
     template_name = 'healthyfriends/guides.html'
