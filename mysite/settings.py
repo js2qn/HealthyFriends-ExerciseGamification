@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'mathfilters', #here
     'healthyfriends',
     'bootstrap4',
 
@@ -137,7 +138,7 @@ AUTHENTICATION_BACKENDS = (
  'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-SITE_ID = 1
+SITE_ID = 3
 
 LOGIN_REDIRECT_URL = '/home/'
 

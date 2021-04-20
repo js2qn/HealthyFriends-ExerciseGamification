@@ -39,5 +39,9 @@ urlpatterns = [
     path('forum/', login_required(views.forum), name='forum'),
     path('guides/', login_required(views.guidesView.as_view()), name='guides'),
     path('addInForum/', views.addInForum, name="addInForum"),
-    path('addInDiscussion/', views.addInDiscussion, name='addInDiscussion'),
+    path('addInDiscussion/', views.addInDiscussion, name = 'addInDiscussion'),
+    # added for goals by Jayden
+    path('updateGoal/', views.updateGoal, name = 'updateGoal'),
+    path('addGoal/', views.addGoal, name = 'addGoal'),
+    path('deleteGoal/', views.deleteGoal, name='deleteGoal'),
 ]
