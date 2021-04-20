@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse
 from django import forms
+from quickchart import QuickChart
 
 from .models import *
 from .forms import *
@@ -47,9 +48,14 @@ def fitLog(request):
             workout.workoutType = request.POST.get('activity')
             workout.calories = request.POST.get('calories')
             workout.save()
-        return render(request, 'healthyfriends/fitnesslog.html', None)
+        newqc = createChart()
+        newqc_url = (newqc.get_url)
+        return render(request, 'healthyfriends/fitnesslog.html', {'quickchart_url': newqc_url})
     else:
-        return render(request, 'healthyfriends/fitnesslog.html', None)
+        qc = createChart()
+        qc_url = (qc.get_url)
+        return render(request, 'healthyfriends/fitnesslog.html', {'quickchart_url': qc_url})
+        
 
 class logView2(TemplateView): 
     template_name = 'healthyfriends/fitnesslog2.html'
@@ -115,3 +121,26 @@ class guidesView(ListView):
     def get_queryset(self):
         return Videos.objects.all()
     
+def createChart() :
+    qc = QuickChart()
+    qc.width = 500
+    qc.height = 300
+    qc.device_pixel_ratio = 2.0
+    latest_workouts_list = Workouts.objects.order_by('-date')[:50]
+    ordLat_workouts_list = reversed(latest_workouts_list)
+    calories_list = []
+    date_list = []
+    for w in ordLat_workouts_list:
+        date_list.append(w.date)
+        calories_list.append(w.calories)
+    qc.config = {
+        "type": "line",
+        "data": {
+            "labels": date_list,
+            "datasets": [{
+                "label": "Calories burned",
+                "data": calories_list
+            }]
+        }
+    }
+    return qc
