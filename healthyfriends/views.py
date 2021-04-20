@@ -90,7 +90,9 @@ def updateGoal(request):
         met = "metric-" + goal_id
         
         if (request.POST.get(cur) == '' or request.POST.get(des) == ''):
-            return render(request, 'healthyfriends/goals.html',{
+            return render(request, 'healthyfriends/goals.html', {
+                'goalsInProgress': Goals.objects.filter(desired_progress__gt=F('current_progress')).order_by('-last_update'),
+                'goalsCompleted': Goals.objects.filter(desired_progress__lte=F('current_progress')).order_by('-last_update'),
                 'error_message': "Please fill both progess fields to update."
             })
 
