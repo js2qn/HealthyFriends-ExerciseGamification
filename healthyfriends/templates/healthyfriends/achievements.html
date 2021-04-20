@@ -16,7 +16,6 @@
 
 {% block content %}
 <h1>Lifetime points: {{achievements_ct}}</h1>
-<p>Recent Achievements</p>
 <table style="width:100%">
     <tr>
         <th>Recent Achievements</th>
@@ -25,12 +24,12 @@
     <tr>
         <th>
             {% for i in achievements %}
-            <li>{{i}}</li>
+            <ul>{{i}}</ul>
             {% endfor %}
         </th>
         <th>
             {% for i in achievements %}
-            <li>{{1}}</li>
+            <ul>{{1}}</ul>
             {% endfor %}
         </th>
     </tr>

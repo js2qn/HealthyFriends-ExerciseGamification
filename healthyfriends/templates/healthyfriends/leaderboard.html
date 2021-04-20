@@ -5,9 +5,30 @@
 {% providers_media_js %}
 
 {% block title %}
-Healthy Friends Leaderboard
+<h1>Healthy Friends Leaderboard</h1>
 {% endblock %}
 
 {% block content %}
-this will contain the healthy friends leaderboard
+<h2>Total Number of Healthy Friends: {{user_ct}}</h2>
+<br>
+<table style="width:100%">
+    <tr>
+        <th>Ranking</th>
+        <th>User</th>
+        <th>Points</th>
+    </tr>
+    <tr>
+        <th>1</th>
+        <th>
+            {% for i in users %}
+            {{i}}
+            {% endfor %}
+        </th>
+        <th>
+            {% for i in test %}
+            {{i}}
+            {% endfor %}
+        </th>
+    </tr>
+</table>
 {% endblock %}
