@@ -71,10 +71,13 @@ class goalsView(ListView):
         context = super(goalsView, self).get_context_data(**kwargs)
         context['goalsInProgress'] = Goals.objects.filter(desired_progress__gt=F('current_progress')).order_by('-last_update', 'description')
         context['goalsCompleted'] = Goals.objects.filter(desired_progress__lte=F('current_progress')).order_by('-last_update', 'description')
+        #context['myGoals'] = Goals.objects.filter(goal_belongs_to)
         return context
 
 def updateGoal(request):
     goal_id = request.POST.get("id")
+    goal_user = request.POST.get("username")
+
     mt = "metrics-toggle-" + goal_id
     descrp = "description-" + goal_id
     cur = "current-" + goal_id
@@ -95,7 +98,7 @@ def updateGoal(request):
                 'goalsCompleted': Goals.objects.filter(desired_progress__lte=F('current_progress')).order_by('-last_update'),
                 'error_message': "Please fill both progess fields to update."
             })
-
+        goal.goal_belongs_to = goal_user
         goal.description = request.POST.get(descrp)
         goal.current_progress = round(Decimal(request.POST.get(cur)), 2)
         goal.desired_progress = round(Decimal(request.POST.get(des)), 2)
@@ -121,6 +124,9 @@ def updateGoal(request):
 
 
 def addGoal(request):
+
+    goal_user = request.POST.get("username")
+
     descrp = request.POST.get("description-add")
     mt = request.POST.get("metrics-toggle-add")
     cur = request.POST.get("current-add")
@@ -138,7 +144,7 @@ def addGoal(request):
         else:
             cur_decimal = round(Decimal(cur), 2)
             des_decimal = round(Decimal(des), 2)
-            goal = Goals.objects.create(description=descrp, current_progress=cur_decimal, desired_progress=des_decimal, metric=met, goal_type="Y-Metrics")
+            goal = Goals.objects.create(goal_belongs_to=goal_user, description=descrp, current_progress=cur_decimal, desired_progress=des_decimal, metric=met, goal_type="Y-Metrics")
             return HttpResponseRedirect(reverse('goals'))
 
     if (mt == "N-Metrics"):
@@ -150,7 +156,7 @@ def addGoal(request):
         })
         else:
             cur_decimal = round(Decimal(cur), 2)
-            goal = Goals.objects.create(description=descrp, current_progress=cur_decimal, goal_type="N-Metrics")
+            goal = Goals.objects.create(goal_belongs_to=goal_user, description=descrp, current_progress=cur_decimal, goal_type="N-Metrics")
             return HttpResponseRedirect(reverse('goals'))
 
 

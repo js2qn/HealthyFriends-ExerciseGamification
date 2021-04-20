@@ -22,7 +22,8 @@ class Profile(models.Model):
 #def init_last_seven_days():
 #    return [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
     
-class Goals(models.Model): 
+class Goals(models.Model):
+    goal_belongs_to = models.CharField(max_length=50, default="")
     description = models.CharField(max_length=50, default='')
     current_progress = models.DecimalField(max_digits=11, decimal_places=2, default=0.00)
     desired_progress = models.DecimalField(max_digits=11, decimal_places=2, default=1.00)
