@@ -44,4 +44,3 @@ wrapt==1.12.1
 quickchart.io
 gunicorn
 django-bootstrap4
-django-mathfilters
