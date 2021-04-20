@@ -93,7 +93,12 @@ def addInForum(request):
     if request.method=='POST':
         form = CreateInForum(request.POST)
         if form.is_valid():
-            form.save()
+            # if valid form, don't save the model just yet
+            # instead, first get the logged user's username and set the forum post's name to that
+            usernameless = form.save()
+            usernameless.name = request.user.get_username()
+            usernameless.save()
+
             return redirect('forum')
     context = {'form':form}
     return render(request, 'healthyfriends/addInForum.html', context)
@@ -103,6 +108,8 @@ def addInDiscussion(request):
     if request.method=='POST':
         form = CreateInDiscussion(request.POST)
         if form.is_valid():
+            form = form.save(commit=False)
+            form.name = request.user.get_username()
             form.save()
             return redirect('forum')
     context={'form':form}
