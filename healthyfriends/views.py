@@ -8,8 +8,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse
 from django import forms
-from django.urls import reverse
 from django.db.models import F
+
+from quickchart import QuickChart
+
 from .models import *
 from .forms import *
 from decimal import Decimal
@@ -48,9 +50,14 @@ def fitLog(request):
             workout.workoutType = request.POST.get('activity')
             workout.calories = request.POST.get('calories')
             workout.save()
-        return render(request, 'healthyfriends/fitnesslog.html', None)
+        newqc = createChart()
+        newqc_url = (newqc.get_url)
+        return render(request, 'healthyfriends/fitnesslog.html', {'quickchart_url': newqc_url})
     else:
-        return render(request, 'healthyfriends/fitnesslog.html', None)
+        qc = createChart()
+        qc_url = (qc.get_url)
+        return render(request, 'healthyfriends/fitnesslog.html', {'quickchart_url': qc_url})
+        
 
 class logView2(TemplateView): 
     template_name = 'healthyfriends/fitnesslog2.html'
@@ -226,19 +233,29 @@ class guidesView(ListView):
 
     def get_queryset(self):
         return Videos.objects.all()
+      
+    
+def createChart() :
+    qc = QuickChart()
+    qc.width = 500
+    qc.height = 300
+    qc.device_pixel_ratio = 2.0
+    latest_workouts_list = Workouts.objects.order_by('-date')[:50]
+    ordLat_workouts_list = reversed(latest_workouts_list)
+    calories_list = []
+    date_list = []
+    for w in ordLat_workouts_list:
+        date_list.append(w.date)
+        calories_list.append(w.calories)
+    qc.config = {
+        "type": "line",
+        "data": {
+            "labels": date_list,
+            "datasets": [{
+                "label": "Calories burned",
+                "data": calories_list
+            }]
+        }
+    }
+    return qc
 
-
-
-
-"""
-    <div class="progress">
-        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width:{{ goal.current_progress }}|intdiv:{{ goal.desired_progress }}%" aria-valuenow="{{ goal.current_progress }}|intdiv:{{ goal.desired_progress }}" aria-valuemin="0" aria-valuemax="100">
-        </div>
-      </div>
-
-
-    <div class="tab-pane" id="history" role="tabpanel" aria-labelledby="history-tab">  
-    <p class="card-text">First settled around 1000 BCE and then founded as the Etruscan Felsina about 500 BCE, it was occupied by the Boii in the 4th century BCE and became a Roman colony and municipium with the name of Bononia in 196 BCE. </p>
-    <a href="#" class="card-link text-danger">Read more</a>
-    </div>
-"""  
