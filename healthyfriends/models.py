@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import F, Min
+from django.db.models.signals import pre_save
+import calendar
 from django.contrib.postgres.fields import ArrayField
 from datetime import date
 
@@ -10,6 +13,15 @@ class Workouts(models.Model):
     length = models.DecimalField(max_digits=4, decimal_places=1)
     workoutType = models.CharField(max_length=200)
     calories = models.IntegerField()
+    points = 1
+
+    def __str__(self):
+        #return calendar.month_name[self.date.month]
+        return calendar.month_name[self.date.month] + " " + str(self.date.day)
+
+    def __int__(self):
+        return self.points
+
 
 class Profile(models.Model): 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -50,10 +62,6 @@ class Goals(models.Model):
 #class Metric(models.Model):
     #goal = models.ForeginKey(Goals, on_delete=models.CASCADE)
     #value = models.DecimalField(max_digits=7, decimal_places=2, default=0.00)
-
-
-
-
 
 class Videos(models.Model):
     # this isn't really all that special, just allows us to easily add videos from admin page instead of having to update the HTML and repush

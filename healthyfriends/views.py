@@ -4,6 +4,9 @@ from django.contrib.auth import logout as auth_logout
 from django.shortcuts import redirect
 from django.views.generic import TemplateView
 from django.views.generic import ListView
+from django.contrib.auth import get_user_model
+from django.db.models import Sum, Avg
+from django.template import loader
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse
@@ -62,10 +65,14 @@ def fitLog(request):
 class logView2(TemplateView): 
     template_name = 'healthyfriends/fitnesslog2.html'
 
-class achievementsView(TemplateView): 
-    template_name = 'healthyfriends/achievements.html'
-###################################################################################
-###################################################################################
+def achievementsView(request):
+    achievements_ct = Workouts.objects.count()
+    achievements = Workouts.objects.all()
+    return render(request, 'healthyfriends/achievements.html', {'achievements_ct':achievements_ct, 'achievements':achievements})
+
+
+#class achievementsView(TemplateView):
+#    template_name = 'healthyfriends/achievements.html'
 
 class goalsView(ListView): 
     template_name = 'healthyfriends/goals.html'
@@ -179,8 +186,9 @@ def deleteGoal(request):
 class profileView(TemplateView): 
     template_name = 'healthyfriends/profile.html'
 
-class leaderboardView(TemplateView): 
+class leaderboardView(TemplateView):
     template_name = 'healthyfriends/leaderboard.html'
+
 """
 class forumView(TemplateView): 
     template_name = 'healthyfriends/forum.html'
