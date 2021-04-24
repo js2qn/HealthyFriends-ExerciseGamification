@@ -92,8 +92,9 @@ def leaderboardView(request):
     users = this_user.objects.all()
     user_ct = this_user.objects.count()
     user_pts = Points.objects.filter(user=request.user)
-    for i in enumerate(users[1:]):
+    for i, x in enumerate(users[1:]):
         rank = i + 1
+        x.rank = rank
     return render(request, 'healthyfriends/leaderboard.html', {'user_ct':user_ct, 'users':users,'user_pts':user_pts, 'rank':rank})
 #class achievementsView(TemplateView):
 #    template_name = 'healthyfriends/achievements.html'
