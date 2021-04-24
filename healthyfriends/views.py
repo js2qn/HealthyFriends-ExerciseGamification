@@ -53,11 +53,11 @@ def fitLog(request):
             workout.workoutType = request.POST.get('activity')
             workout.calories = request.POST.get('calories')
             workout.save()
-        newqc = createChart()
+        newqc = createChart(request.user)
         newqc_url = (newqc.get_url)
         return render(request, 'healthyfriends/fitnesslog.html', {'quickchart_url': newqc_url})
     else:
-        qc = createChart()
+        qc = createChart(request.user)
         qc_url = (qc.get_url)
         return render(request, 'healthyfriends/fitnesslog.html', {'quickchart_url': qc_url})
         
@@ -250,16 +250,20 @@ class guidesView(ListView):
         return Videos.objects.all()
       
     
-def createChart() :
+def createChart(user) :
     qc = QuickChart()
     qc.width = 500
     qc.height = 300
     qc.device_pixel_ratio = 2.0
-    latest_workouts_list = Workouts.objects.order_by('-date')[:50]
-    ordLat_workouts_list = reversed(latest_workouts_list)
+    user_workouts_list = []
+    objects = Workouts.objects.order_by('-date')
+    for workout in objects:
+        if user == workout.user:
+            user_workouts_list.append(workout)
+    latest_workouts_list = user_workouts_list[:50]
     calories_list = []
     date_list = []
-    for w in ordLat_workouts_list:
+    for w in reversed(latest_workouts_list):
         date_list.append(w.date)
         calories_list.append(w.calories)
     qc.config = {
@@ -273,4 +277,3 @@ def createChart() :
         }
     }
     return qc
-
