@@ -30,6 +30,13 @@ class Profile(models.Model):
     weight = models.DecimalField(max_digits=4, decimal_places=1)
     height = models.DecimalField(max_digits=3, decimal_places=1)
 
+class Points(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    points = models.IntegerField(default = 0, null=False)
+
+    def __str__(self):
+        return str(self.points)
+
 
 #def init_last_seven_days():
 #    return [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]

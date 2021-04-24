@@ -1,3 +1,4 @@
+from django.db.models.functions import RowNumber
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth import logout as auth_logout
@@ -5,7 +6,7 @@ from django.shortcuts import redirect
 from django.views.generic import TemplateView
 from django.views.generic import ListView
 from django.contrib.auth import get_user_model
-from django.db.models import Sum, Avg
+from django.db.models import Sum, Avg, Window
 from django.template import loader
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
@@ -52,6 +53,11 @@ def fitLog(request):
             workout.length = request.POST.get('length')
             workout.workoutType = request.POST.get('activity')
             workout.calories = request.POST.get('calories')
+            pts, _ = Points.objects.get_or_create(user = request.user)
+            pts.points = F('points') + 1
+            pts.save()
+            #pts = Points(user = request.user, points =1)
+            #pts = Points.objects.filter(user = request.user).update(points = F('points')+1)
             workout.save()
         newqc = createChart(request.user)
         newqc_url = (newqc.get_url)
@@ -65,12 +71,30 @@ def fitLog(request):
 class logView2(TemplateView): 
     template_name = 'healthyfriends/fitnesslog2.html'
 
+def updatePoints(request):
+    if request.method == 'POST':
+        pts = Points()
+        pts.user = request.user
+        pts.points += 1
+    return render(request, 'healthyfriends/fitnesslog.html')
+
 def achievementsView(request):
+    #test = Points.objects.all()
     achievements_ct = Workouts.objects.count()
-    achievements = Workouts.objects.all()
+    achievements = Workouts.objects.all().order_by('-date')
     return render(request, 'healthyfriends/achievements.html', {'achievements_ct':achievements_ct, 'achievements':achievements})
 
+def leaderboardView(request):
+    rank = 1
 
+    #ranking = Points.objects.all().order_by('-points').annotate(rank = Window(expression=RowNumber()))
+    this_user = get_user_model()
+    users = this_user.objects.all()
+    user_ct = this_user.objects.count()
+    user_pts = Points.objects.filter(user=request.user)
+    for i in enumerate(users[1:]):
+        rank = i + 1
+    return render(request, 'healthyfriends/leaderboard.html', {'user_ct':user_ct, 'users':users,'user_pts':user_pts, 'rank':rank})
 #class achievementsView(TemplateView):
 #    template_name = 'healthyfriends/achievements.html'
 
@@ -125,6 +149,9 @@ def updateGoal(request):
         
         if(round(Decimal(request.POST.get(cur)), 2) >= 1):
             goal.current_progress = 1.00
+            pts, _ = Points.objects.get_or_create(user = request.user)
+            pts.points = F('points') + 5
+            pts.save()
         elif (round(Decimal(request.POST.get(cur)), 2) >= 0 and round(Decimal(request.POST.get(cur)), 2) < 1):
             goal.current_progress = 0.00
          
@@ -186,8 +213,8 @@ def deleteGoal(request):
 class profileView(TemplateView): 
     template_name = 'healthyfriends/profile.html'
 
-class leaderboardView(TemplateView):
-    template_name = 'healthyfriends/leaderboard.html'
+#class leaderboardView(TemplateView):
+   # template_name = 'healthyfriends/leaderboard.html'
 
 """
 class forumView(TemplateView): 
