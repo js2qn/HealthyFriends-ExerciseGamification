@@ -18,14 +18,16 @@
         <th>Points</th>
     </tr>
     <tr>
-        <th>1</th>
+        <th>
+            {{rank}}
+        </th>
         <th>
             {% for i in users %}
             {{i}}
             {% endfor %}
         </th>
         <th>
-            {% for i in test %}
+            {% for i in user_pts %}
             {{i}}
             {% endfor %}
         </th>
