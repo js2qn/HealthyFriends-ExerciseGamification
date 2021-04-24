@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '1878j3mev!4+4=-ezyp5x12gr_6)n+&2+^9%!qt44$a30so@*2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.herokuapp.com/']
 
 
 # Application definition
@@ -91,6 +91,7 @@ DATABASES = {
     }
 }
 
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -138,7 +139,7 @@ AUTHENTICATION_BACKENDS = (
  'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-SITE_ID = 3
+SITE_ID = 1
 
 LOGIN_REDIRECT_URL = '/home/'
 
@@ -153,3 +154,9 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+SECURE_SSL_REDIRECT = True
+
+SESSION_COOKIE_SECURE = True
+
+CSRF_COOKIE_SECURE = True
