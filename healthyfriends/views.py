@@ -264,7 +264,7 @@ def createChart(user) :
     calories_list = []
     date_list = []
     for w in reversed(latest_workouts_list):
-        date_list.append(w.date)
+        date_list.append(w.date.strftime("%m-%d-%Y"))
         calories_list.append(w.calories)
     qc.config = {
         "type": "line",
