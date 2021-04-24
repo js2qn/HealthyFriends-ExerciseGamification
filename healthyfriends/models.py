@@ -9,7 +9,7 @@ from datetime import date
 # Create your models here.
 class Workouts(models.Model): 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    date = models.DateTimeField()
+    date = models.DateField()
     length = models.DecimalField(max_digits=4, decimal_places=1)
     workoutType = models.CharField(max_length=200)
     calories = models.IntegerField()
