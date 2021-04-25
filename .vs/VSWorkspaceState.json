@@ -2,9 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\healthyfriends",
+    "\\healthyfriends\\migrations",
     "\\healthyfriends\\templates",
-    "\\healthyfriends\\templates\\healthyfriends"
+    "\\healthyfriends\\templates\\healthyfriends",
+    "\\mysite"
   ],
-  "SelectedNode": "\\healthyfriends\\models.py",
+  "SelectedNode": "\\healthyfriends\\migrations\\__init__.py",
   "PreviewInSolutionExplorer": false
 }

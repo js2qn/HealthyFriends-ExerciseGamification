@@ -30,7 +30,7 @@ class GuidesViewTest(TestCase):
         # this line forces the client to login, allows us to access the url via reverse
         # idea comes from https://stackoverflow.com/questions/2619102/djangos-self-client-login-does-not-work-in-unit-tests user Muthuvel
         self.client.force_login(User.objects.get_or_create(username='testuser')[0])
-        response = self.client.get(reverse('guides'))
+        response = self.client.get(reverse('guides'), secure=True)
         self.assertIs(response.status_code, 200)
         self.assertQuerysetEqual(response.context['videos_list'],[])
     
@@ -40,7 +40,7 @@ class GuidesViewTest(TestCase):
         """
         createVideo("https://www.youtube.com/embed/ljG1WzBAboQ", "helpful")
         self.client.force_login(User.objects.get_or_create(username='testuser')[0])
-        response = self.client.get(reverse('guides'))
+        response = self.client.get(reverse('guides'), secure=True)
         self.assertIs(response.status_code, 200)
         self.assertQuerysetEqual(list(response.context['videos_list']), ['<Videos: Videos object (1)>'])
     def test_mult_video(self):
@@ -50,6 +50,6 @@ class GuidesViewTest(TestCase):
         createVideo("https://www.youtube.com/embed/ljG1WzBAboQ", "helpful1")
         createVideo("https://www.youtube.com/embed/ljG1WzBAboQ", "helpful2")
         self.client.force_login(User.objects.get_or_create(username='testuser')[0])
-        response = self.client.get(reverse('guides'))
+        response = self.client.get(reverse('guides'), secure=True)
         self.assertIs(response.status_code, 200)
         self.assertQuerysetEqual(list(response.context['videos_list']), ['<Videos: Videos object (1)>', '<Videos: Videos object (2)>'])
