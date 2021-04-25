@@ -89,11 +89,11 @@ def leaderboardView(request):
     ranking = []
     #ranking = Points.objects.all().order_by('-points').annotate(rank = Window(expression=RowNumber()))
     this_user = get_user_model()
-    #users = this_user.objects.all()
+    us = this_user.objects.all()
     users = Points.objects.order_by('points')
     user_ct = this_user.objects.count()
     #user_pts = Points.objects.order_by('-points')
-    for i,x  in enumerate(users[1:]):
+    for i,x  in enumerate(us[1:]):
         ranking.append(rank)
         rank = rank + 1
         x.rank = rank
