@@ -71,12 +71,12 @@ def fitLog(request):
 class logView2(TemplateView): 
     template_name = 'healthyfriends/fitnesslog2.html'
 
-def updatePoints(request):
-    if request.method == 'POST':
-        pts = Points()
-        pts.user = request.user
-        pts.points += 1
-    return render(request, 'healthyfriends/fitnesslog.html')
+#def updatePoints(request):
+#    if request.method == 'POST':
+#        pts = Points()
+#        pts.user = request.user
+#        pts.points += 1
+#    return render(request, 'healthyfriends/fitnesslog.html')
 
 def achievementsView(request):
     #pts = Points.objects.filter(user=request.user).count()
