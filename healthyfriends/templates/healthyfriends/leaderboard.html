@@ -17,20 +17,22 @@
         <th>User</th>
         <th>Points</th>
     </tr>
-    <tr>
-        <th>
-            {{rank}}
-        </th>
-        <th>
+    <tr >
+        <td>
+            {% for i in rank %}
+            <ul >{{i}}</ul>
+            {% endfor %}
+        </td>
+        <td>
             {% for i in users %}
-            {{i}}
+            <ul >{{i}}</ul>
             {% endfor %}
-        </th>
-        <th>
+        </td>
+        <td>
             {% for i in user_pts %}
-            {{i}}
+            <ul>{{i}}</ul>
             {% endfor %}
-        </th>
+        </td>
     </tr>
 </table>
 {% endblock %}
