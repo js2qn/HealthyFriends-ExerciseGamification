@@ -79,9 +79,9 @@ def updatePoints(request):
     return render(request, 'healthyfriends/fitnesslog.html')
 
 def achievementsView(request):
-    #test = Points.objects.all()
-    achievements_ct = Workouts.objects.count()
-    achievements = Workouts.objects.all().order_by('-date')
+    pts = Points.objects.filter(user=request.user).count()
+    #achievements_ct = Workouts.objects.count()
+    achievements = Workouts.objects.filter(user=request.user).order_by('-date')
     return render(request, 'healthyfriends/achievements.html', {'achievements_ct':achievements_ct, 'achievements':achievements})
 
 def leaderboardView(request):
