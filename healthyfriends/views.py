@@ -80,7 +80,7 @@ def updatePoints(request):
 
 def achievementsView(request):
     #pts = Points.objects.filter(user=request.user).count()
-    achievements_ct = Points.objects.filter(user=request.user).count()
+    achievements_ct = Points.objects.filter(user=request.user)
     achievements = Workouts.objects.filter(user=request.user).order_by('-date')
     return render(request, 'healthyfriends/achievements.html', {'achievements_ct':achievements_ct, 'achievements':achievements})
 
