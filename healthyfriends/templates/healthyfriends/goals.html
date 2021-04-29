@@ -18,7 +18,7 @@
         <h3 style="padding-bottom: 10px">In Progress</h3>
         {% if goalsInProgress %}
           {% for goal in goalsInProgress %}
-            {% if goal.goal_belongs_to == user.username%}
+            {% if goal.goal_belongs_to == user.username %}
               {% with goal.id|stringformat:"s" as goalid %}
                 <div class="container">
                   <div class="row">
