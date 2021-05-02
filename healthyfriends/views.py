@@ -88,7 +88,6 @@ def achievementsView(request):
 def leaderboardView(request):
     rank = 1
     ranking = []
-    fuck = []
     #ranking = Points.objects.all().order_by('-points').annotate(rank = Window(expression=RowNumber()))
     this_user = get_user_model()
     us = this_user.objects.all()
@@ -96,9 +95,8 @@ def leaderboardView(request):
     #pts = Points.objects.all()
     pts = []
     for i in users:
-        egg = i.points
-        pts.append(egg)
-
+        pt = i.points
+        pts.append(pt)
 
     user_ct = this_user.objects.count()
     #user_pts = Points.objects.order_by('-points')
