@@ -13,23 +13,23 @@
 <br>
 <table style="width:100%">
     <tr>
-        <th>Ranking</th>
-        <th>User</th>
-        <th>Points</th>
+        <th style="text-align:left"> Ranking</th>
+        <th style="text-align:center"> User </th>
+        <th style="text-align:center"> Points</th>
     </tr>
-    <tr >
-        <td>
+    <tr>
+        <td style="text-align:left">
             {% for i in rank %}
             <ul >{{i}}</ul>
             {% endfor %}
         </td>
-        <td>
+        <td style="text-align:center">
             {% for i in users %}
             <ul >{{i}}</ul>
             {% endfor %}
         </td>
-        <td>
-            {% for i in user_pts %}
+        <td style="text-align:center">
+            {% for i in pts %}
             <ul>{{i}}</ul>
             {% endfor %}
         </td>
