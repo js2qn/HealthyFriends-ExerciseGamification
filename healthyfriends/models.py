@@ -13,14 +13,10 @@ class Workouts(models.Model):
     length = models.DecimalField(max_digits=4, decimal_places=1)
     workoutType = models.CharField(max_length=200)
     calories = models.IntegerField()
-    points = 1
 
     def __str__(self):
         #return calendar.month_name[self.date.month]
         return calendar.month_name[self.date.month] + " " + str(self.date.day)
-
-    def __int__(self):
-        return self.points
 
 
 class Profile(models.Model): 
@@ -35,7 +31,7 @@ class Points(models.Model):
     points = models.IntegerField(default = 0, null=False)
 
     def __str__(self):
-        return str(self.user) + " " + str(self.points)
+        return str(self.user)
 
 
 #def init_last_seven_days():
