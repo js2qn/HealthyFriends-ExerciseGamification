@@ -90,8 +90,12 @@ def leaderboardView(request):
     ranking = [] #
     this_user = get_user_model()
     us = this_user.objects.all()
+    egg = Points.objects.all()
+
     users = Points.objects.order_by('-points') #
+
     user_list = list(us)
+
     point_users = list(users)
     more_users = []
     pts = []
@@ -103,7 +107,8 @@ def leaderboardView(request):
 
     #for i in users:
     #    pt = i.points
-    #    pts.append(pt)
+     #   pts.append(pt)
+
 
     user_ct = this_user.objects.count()
 
