@@ -105,15 +105,13 @@ def leaderboardView(request):
         ranking.append(rank)
         rank = rank + 1
         x.rank = rank
-        if(rank > Points.objects.count()):
-            break;
 
     for i in user_list:
         if(i not in point_users):
             point_users.append(i)
 
-    #while(len(pts) < user_ct):
-    #    pts.append(0)
+    while(len(pts) < user_ct):
+        pts.append(0)
 
     return render(request, 'healthyfriends/leaderboard.html', {'user_ct':user_ct, 'users':user_list, 'rank':ranking, 'pts':pts})
 #class achievementsView(TemplateView):
