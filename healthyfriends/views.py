@@ -79,8 +79,8 @@ class logView2(TemplateView):
 #    return render(request, 'healthyfriends/fitnesslog.html')
 
 def achievementsView(request):
-    #if(Workouts.objects.get(user=request.user) is None):
-    #    return render(request, 'healthyfriends/achievements.html')
+    if(Workouts.objects.get(user=request.user) is None):
+        return render(request, 'healthyfriends/achievements.html')
     achievements_ct = Points.objects.get(user=request.user).points
     achievements = Workouts.objects.filter(user=request.user).order_by('-date')
     return render(request, 'healthyfriends/achievements.html', {'achievements_ct':achievements_ct, 'achievements':achievements})
@@ -112,8 +112,8 @@ def leaderboardView(request):
 
     return render(request, 'healthyfriends/leaderboard.html', {'user_ct':user_ct, 'users':more_users, 'rank':ranking, 'pts':pts})
 
-class achievementsView2(TemplateView):
-    template_name = 'healthyfriends/achievements.html'
+#class achievementsView2(TemplateView):
+#    template_name = 'healthyfriends/achievements.html'
 
 class goalsView(ListView): 
     template_name = 'healthyfriends/goals.html'
