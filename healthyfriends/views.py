@@ -92,6 +92,7 @@ def leaderboardView(request):
     us = this_user.objects.all()
     users = Points.objects.order_by('-points') #
     user_list = list(us)
+    point_users = list(users)
     pts = []
 
     for i in users:
@@ -107,7 +108,7 @@ def leaderboardView(request):
 
     for i in us:
         if(i not in user_list):
-            user_list.append(i)
+            point_users.append(i)
 
     while(len(pts) < user_ct):
         pts.append(0)
