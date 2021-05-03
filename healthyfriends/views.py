@@ -87,24 +87,32 @@ def achievementsView(request):
 
 def leaderboardView(request):
     rank = 1
-    ranking = []
-    #ranking = Points.objects.all().order_by('-points').annotate(rank = Window(expression=RowNumber()))
+    ranking = [] #
     this_user = get_user_model()
     us = this_user.objects.all()
-    users = Points.objects.order_by('-points')
-    #pts = Points.objects.all()
+    users = Points.objects.order_by('-points') #
+    user_list = list(us)
     pts = []
+
     for i in users:
         pt = i.points
         pts.append(pt)
 
     user_ct = this_user.objects.count()
-    #user_pts = Points.objects.order_by('-points')
+
     for i,x  in enumerate(us[0:]):
         ranking.append(rank)
         rank = rank + 1
         x.rank = rank
-    return render(request, 'healthyfriends/leaderboard.html', {'user_ct':user_ct, 'users':users, 'rank':ranking, 'pts':pts})
+
+    for i in us:
+        if(i not in user_list):
+            user_list.append(i)
+
+    while(len(pts) < user_ct):
+        pts.append(0)
+
+    return render(request, 'healthyfriends/leaderboard.html', {'user_ct':user_ct, 'users':user_list, 'rank':ranking, 'pts':pts})
 #class achievementsView(TemplateView):
 #    template_name = 'healthyfriends/achievements.html'
 
