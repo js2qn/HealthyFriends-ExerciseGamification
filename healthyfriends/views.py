@@ -108,8 +108,8 @@ def leaderboardView(request):
         if(rank > Points.objects.count()):
             break;
 
-    for i in us:
-        if(i not in user_list):
+    for i in user_list:
+        if(i not in point_users):
             point_users.append(i)
 
     #while(len(pts) < user_ct):
