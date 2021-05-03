@@ -99,7 +99,7 @@ def leaderboardView(request):
     point_users = list(users)
     more_users = []
     pts = []
-    
+
     for i in users:
         i = str(i)
         pts.append(i.split()[1])
@@ -109,20 +109,21 @@ def leaderboardView(request):
     #    pt = i.points
      #   pts.append(pt)
 
-
     user_ct = this_user.objects.count()
 
     for i,x  in enumerate(us[0:]):
         ranking.append(rank)
         rank = rank + 1
         x.rank = rank
+        if(rank > Points.objects.count()):
+            break;
 
-    for i in user_list:
-        if(i not in point_users):
-            point_users.append(i)
+    #for i in user_list:
+    #    if(i not in point_users):
+    #        more_users.append(None)
 
-    while(len(pts) < user_ct):
-        pts.append(0)
+    #while(len(pts) < user_ct):
+    #    pts.append(0)
 
     return render(request, 'healthyfriends/leaderboard.html', {'user_ct':user_ct, 'users':more_users, 'rank':ranking, 'pts':pts})
 #class achievementsView(TemplateView):
