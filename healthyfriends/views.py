@@ -79,24 +79,20 @@ class logView2(TemplateView):
 #    return render(request, 'healthyfriends/fitnesslog.html')
 
 def achievementsView(request):
-    #pts = Points.objects.filter(user=request.user).count()
-    #achievements_ct = Points.objects.filter(user=request.user)
+    if(Workouts.objects.get(user=request.user) is None):
+        return render(request, 'healthyfriends/achievements.html')
     achievements_ct = Points.objects.get(user=request.user).points
     achievements = Workouts.objects.filter(user=request.user).order_by('-date')
     return render(request, 'healthyfriends/achievements.html', {'achievements_ct':achievements_ct, 'achievements':achievements})
 
 def leaderboardView(request):
     rank = 1
-    ranking = [] #
+    ranking = []
     this_user = get_user_model()
     us = this_user.objects.all()
-    egg = Points.objects.all()
 
-    users = Points.objects.order_by('-points') #
+    users = Points.objects.order_by('-points')
 
-    user_list = list(us)
-
-    point_users = list(users)
     more_users = []
     pts = []
 
@@ -104,10 +100,6 @@ def leaderboardView(request):
         i = str(i)
         pts.append(i.split()[1])
         more_users.append(i.split()[0])
-
-    #for i in users:
-    #    pt = i.points
-     #   pts.append(pt)
 
     user_ct = this_user.objects.count()
 
@@ -117,13 +109,6 @@ def leaderboardView(request):
         x.rank = rank
         if(rank > Points.objects.count()):
             break;
-
-    #for i in user_list:
-    #    if(i not in point_users):
-    #        more_users.append(None)
-
-    #while(len(pts) < user_ct):
-    #    pts.append(0)
 
     return render(request, 'healthyfriends/leaderboard.html', {'user_ct':user_ct, 'users':more_users, 'rank':ranking, 'pts':pts})
 #class achievementsView(TemplateView):
