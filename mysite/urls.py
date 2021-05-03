@@ -32,6 +32,7 @@ urlpatterns = [
     path('fitnesslog/', login_required(views.fitLog), name='fitnesslog'),
     path('fitnesslog2/', login_required(views.logView2.as_view()), name='fitnesslog2'),
     path('achievements/', login_required(views.achievementsView), name='achievements'),
+    path('achievements/'), login_required(views.achievementsView2.as_view()),
     path('goals/', login_required(views.goalsView.as_view()), name='goals'),
     path('leaderboard/', login_required(views.leaderboardView), name='leaderboard'),
     # path('forum/', login_required(views.forumView.as_view()), name='forum'),
