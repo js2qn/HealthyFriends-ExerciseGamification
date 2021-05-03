@@ -31,7 +31,7 @@ class Points(models.Model):
     points = models.IntegerField(default = 0, null=False)
 
     def __str__(self):
-        return str(self.user)
+        return str(self.user) + " " str(self.points)
 
 
 #def init_last_seven_days():
