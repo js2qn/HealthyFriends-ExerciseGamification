@@ -79,7 +79,7 @@ class logView2(TemplateView):
 #    return render(request, 'healthyfriends/fitnesslog.html')
 
 def achievementsView(request):
-    if(Workouts.objects.get(user=request.user) is None):
+    if(not Workouts.objects.filter(user=request.user)):
         return render(request, 'healthyfriends/achievements.html')
     achievements_ct = Points.objects.get(user=request.user).points
     achievements = Workouts.objects.filter(user=request.user).order_by('-date')
