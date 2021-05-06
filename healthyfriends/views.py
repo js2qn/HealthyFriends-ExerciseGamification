@@ -304,12 +304,19 @@ def createChart(user) :
     for workout in objects:
         if user == workout.user:
             user_workouts_list.append(workout)
+
     latest_workouts_list = user_workouts_list[:50]
     calories_list = []
     date_list = []
     for w in reversed(latest_workouts_list):
-        date_list.append(w.date.strftime("%m-%d-%Y"))
-        calories_list.append(w.calories)
+        if len(date_list) == 0:
+            date_list.append(w.date.strftime("%m-%d-%Y"))
+            calories_list.append(w.calories)
+        elif w.date.strftime("%m-%d-%Y") != date_list[len(date_list)-1]:
+            date_list.append(w.date.strftime("%m-%d-%Y"))
+            calories_list.append(w.calories)
+        else :
+            calories_list[len(calories_list)-1] = calories_list[len(calories_list)-1] + w.calories
     qc.config = {
         "type": "line",
         "data": {
